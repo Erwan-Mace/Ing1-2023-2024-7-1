@@ -1,14 +1,14 @@
 void DeplacementJoueur(int PosJoueur[2], char touche) {
-    if (touche == 'q') {
+    if (touche == 'q') { // si touche q pressé alors le joueur se décale d'une colonne vers la gauche
         PosJoueur[1] = PosJoueur[1] - 1;
     }
-    else if (touche == 'd') {
+    else if (touche == 'd') { // si touche d pressé alors le joueur se décale d'une colonne vers la droite
         PosJoueur[1] = PosJoueur[1] + 1;
     }
-    else if (touche == 'z') {
+    else if (touche == 'z') { // si touche z pressé alors le joueur se décale d'une ligne vers le haut
         PosJoueur[0] = PosJoueur[0] - 1;
     }
-    else if (touche == 's') {
+    else if (touche == 's') { // si touche s pressé alors le joueur se décale d'une ligne vers le bas
         PosJoueur[0] = PosJoueur[0] + 1;
     }
 }
