@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include <unistd.h> // pour la fonction sleep(1)
+#include <stdlib.h> // pour la fonction system("cls")
 
 int main() {
     int seconds = 120;
@@ -8,8 +8,8 @@ int main() {
         printf("Temps restant : %d", seconds);
         fflush(stdout); // Forcer le vidage du tampon de sortie
         sleep(1); // Attendre 1 seconde
-        seconds--;
-        system("cls");
+        seconds--; // Le nombre de seconde diminue de 1 à chaque boucle
+        system("cls"); // Nettoyer la console
     }
 
     printf("Time's up!\n");
