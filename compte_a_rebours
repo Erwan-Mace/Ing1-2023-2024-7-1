@@ -2,7 +2,7 @@
 #include <unistd.h> // pour la fonction sleep(1)
 #include <stdlib.h> // pour la fonction system("cls")
 
-int main() {
+void compte_a_rebours () {
     int secondes = 120; // Temps imparti pour la partie
     
     while (secondes > 0) { // Tant que le nombre de secondes n'a pas atteint 0
@@ -14,7 +14,5 @@ int main() {
     
     // Quand il ne reste plus de temps
     printf("Time's up!\n");
-    sleep(1); // Attendre 1 seconde pour pouvoir lire l'affichage
-    
-    return 0;
+    sleep(1); // Attendre 1 seconde pour pouvoir lire
 }
