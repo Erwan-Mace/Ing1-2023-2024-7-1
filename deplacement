@@ -12,3 +12,10 @@ void DeplacementJoueur(int PosJoueur[2], char touche) {
         PosJoueur[0] = PosJoueur[0] + 1;
     }
 }
+
+Dans le main on a:
+char NvTableau[ligne][colonne];
+char pos=' ';
+int PositionJoueur[2] = {5, 10};
+pos=getch();
+DeplacementJoueur(PositionJoueur, pos);
