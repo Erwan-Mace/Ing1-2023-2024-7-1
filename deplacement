@@ -17,5 +17,5 @@ Dans le main on a:
 char NvTableau[ligne][colonne];
 char pos=' ';
 int PositionJoueur[2] = {5, 10};
-pos=getch(); // permet de lire les touches saisies au clavier (ATTENTION il faut ajouter une bibliotheque specifique conio.h
+pos=getch(); // permet de lire les touches saisies au clavier (ATTENTION il faut ajouter une bibliotheque specifique conio.h)
 DeplacementJoueur(PositionJoueur, pos);
