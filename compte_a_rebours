@@ -12,10 +12,9 @@ int main() {
         system("cls"); // Nettoyer la console
     }
     
-    if (secondes == 0) { // Quand il ne reste plus de temps
-        printf("Time's up!\n");
-        sleep(1); // Attendre 1 seconde pour pouvoir lire
-    }
+    // Quand il ne reste plus de temps
+    printf("Time's up!\n");
+    sleep(1); // Attendre 1 seconde pour pouvoir lire l'affichage
     
     return 0;
 }
