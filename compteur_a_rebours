@@ -1,1 +1,18 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
+int main() {
+    int seconds = 120;
+    while (seconds >= 0) {
+        printf("Temps restant : %d", seconds);
+        fflush(stdout); // Forcer le vidage du tampon de sortie
+        sleep(1); // Attendre 1 seconde
+        seconds--;
+        system("cls");
+    }
+
+    printf("Time's up!\n");
+
+    return 0;
+}
