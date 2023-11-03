@@ -146,31 +146,53 @@ for(int i=0;i<2;i++){
 }
 
 int main() {
-    int f = 0;
-    int Obstacle[2][obstacle];
     char Tableau[ligne][colonne];
-    char pos;
-    char oiseaux='O';
-    int NombreOiseaux=4;
     int PositionJoueur[2] = {4, 9};
+    char pos;
+    int NombreOiseaux = 4;
+    int f = 0;
+
+    clock_t start = clock();
+    int timer = 120; // 120 secondes pour le timer
+
     InitialisationMatrice(Tableau);
-    InitialisationObstacle(Obstacle);
-    Affichage(Tableau, PositionJoueur, Obstacle);
-    while (f != NombreOiseaux) {
-        pos = getch();
-        system("cls");
-        DeplacementJoueur(PositionJoueur, pos,Obstacle);
-        Affichage(Tableau, PositionJoueur, Obstacle);
-        if (Tableau[PositionJoueur[0]][PositionJoueur[1]] == oiseaux) {
-            f += 1;
-            if(f != NombreOiseaux) {
-                printf("\nVous avez attrape un oiseau!\nIl vous en reste %d a attraper", NombreOiseaux - f);
+    Affichage(Tableau, PositionJoueur);
+    AfficheTimer(timer);
+
+    while (f != NombreOiseaux && timer > 0) {
+        if (kbhit()) {
+            pos = getch();
+            system("cls");
+            DeplacementJoueur(PositionJoueur, pos);
+            Affichage(Tableau, PositionJoueur);
+
+            // Mise à jour et affichage du timer
+            clock_t end = clock();
+            double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+            if (elapsed >= 1.0) {
+                timer -= (int)elapsed;
+                start = clock(); // Réinitialisation du début pour le prochain tick
+            }
+            AfficheTimer(timer);
+
+            if (Tableau[PositionJoueur[0]][PositionJoueur[1]] == 'O') {
+                f++;
                 Tableau[PositionJoueur[0]][PositionJoueur[1]] = ' ';
+                printf("\nVous avez attrape un oiseau! Il vous en reste %d a attraper.\n", NombreOiseaux - f);
             }
         }
+
+        // si le timer écoulé
+        if (timer <= 0) {
+            printf("\nLe temps est écoulé ! Vous avez perdu.\n");
+            break;
+        }
     }
-    printf("Bravo! Vous avez attrape tous les oiseaux!");
-    sleep(2);
+
+    if (f == NombreOiseaux) {
+        printf("Bravo! Vous avez attrape tous les oiseaux!\n");
+        sleep(2);
+    }
     return 0;
 }
 
