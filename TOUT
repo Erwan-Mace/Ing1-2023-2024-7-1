@@ -149,12 +149,18 @@ void AfficheTimer(int timer) {
     printf("Temps restant : %d secondes\n", timer);
 }
 
+int Vie(int nb_vies) {
+    nb_vies = nb_vies - 1;
+    return nb_vies;
+}
+
 int main() {
     int f = 0;
     int Obstacle[2][obstacle];
     char Tableau[ligne][colonne];
     char pos;
     char oiseaux='O';
+    int nb_vies = 3;
     int NombreOiseaux=4;
     int PositionJoueur[2] = {4, 9};
 
@@ -189,8 +195,9 @@ int main() {
             }
         }
         // si le timer écoulé
-        if (timer <= 0) {
-            printf("\nLe temps est écoulé ! Vous avez perdu.\n");
+        if (timer == 0) {
+            Vie(nb_vies);
+            printf("\nLe temps est ecoule ! Vous avez perdu.\n Il ne vous reste plus que %d vies.", Vie(nb_vies));
             break;
         }
 
