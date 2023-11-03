@@ -120,6 +120,7 @@ void DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle]) {
     indicateur=0;
 }
 
+/*
 void compte_a_rebours () {
     int secondes = 120; // Temps imparti pour la partie
 
@@ -134,6 +135,8 @@ void compte_a_rebours () {
     printf("Time's up!\n");
     sleep(1); // Attendre 1 seconde pour pouvoir lire
 }
+*/
+
 void InitialisationObstacle(int tab[2][obstacle]){
 
     int TabObstacle[2][obstacle]={
