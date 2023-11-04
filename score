@@ -1,0 +1,10 @@
+int score;
+
+score=timer*100
+
+if (f == NombreOiseaux){
+        printf("!vous avez gagne! votre score est de %d",score);
+    }
+    else  {
+        printf("Bravo! Vous avez attrape tous les oiseaux!\n");
+    }
