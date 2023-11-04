@@ -200,7 +200,14 @@ int main() {
         // si le timer écoulé
         if (timer == 0) {
             Vie(nb_vies);
-            printf("\nLe temps est ecoule ! Vous avez perdu.\n Il ne vous reste plus que %d vies.", Vie(nb_vies));
+            if (Vie(nb_vies) > 0) {
+                printf("\nLe temps est ecoule ! Vous avez perdu.\n Il ne vous reste plus que %d vies.", Vie(nb_vies));
+                sleep(2);
+            }
+            else {
+                printf("\nVous n'avez plus de vie !\n Attendez avant de retenter votre chance.");
+                sleep(2);
+            }
             break;
         }
 
