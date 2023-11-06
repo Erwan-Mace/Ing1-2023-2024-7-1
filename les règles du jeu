@@ -1,8 +1,14 @@
-printf("Dans l'arène, quatre oiseaux, représentés par le symbole 'O', sont placés aux quatre coins. Le joueur, incarné par le caractère 'P', doit les collecter tous.\n");
-printf("Cependant, des précautions doivent être prises pour éviter les blocs tueurs symbolisés par '%c'. Ces derniers sont mortels au contact.\n",177);
-printf("L'arène comprend également des blocs immobiles, également représentés par '%c', qui servent d'obstacles.\n",223);
-printf("Une balle, désignée par '%c', rebondit à l'intérieur de l'arène et peut éliminer le joueur si elle n'est pas esquivée avec succès.\n",0x02);
-printf("Enfin, des blocs poussables, marqués par '%c', peuvent être déplacés par le joueur. Ces blocs sont inoffensifs et ne causent aucun dégât lorsqu'ils sont poussés.\n", );
-printf("Le but du jeu est de récupérer tous les oiseaux sans subir de dégâts des blocs tueurs ou de la balle rebondissante, tout en se servant judicieusement des blocs poussables pour faciliter la tâche.");
+#include <stdio.h>
+
+int main(){
+    printf("Dans l'arene, quatre oiseaux, representes par le symbole 'O', sont places aux quatre coins. Le joueur, incarne par le caractere 'P', doit les collecter tous.\n");
+    printf("Cependant, des precautions doivent etre prises pour eviter les blocs tueurs symbolises par '%c'. Ces derniers sont mortels au contact.\n",177);
+    printf("L'arene comprend egalement des blocs immobiles, egalement representes par %c, qui servent d obstacles.\n",223);
+    printf("Une balle, designee par %c, rebondit à l interieur de l arene et peut eliminer le joueur si elle n est pas esquivee avec succes.\n",0x02);
+    printf("Enfin, des blocs poussables, marques par %c, peuvent etre deplaces par le joueur. Ces blocs sont inoffensifs et ne causent aucun degat lorsqu ils sont pousses.\n",64);
+    printf("Le but du jeu est de recuperer tous les oiseaux sans subir de degats des blocs tueurs ou de la balle rebondissante, tout en se servant judicieusement des blocs poussables pour faciliter la tache.\n");
+
+    return 0;
+}
  
 
