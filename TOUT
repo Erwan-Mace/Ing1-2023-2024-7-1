@@ -168,7 +168,8 @@ int main() {
     int nb_vies = 3;
     int NombreOiseaux=4;
     int PositionJoueur[2] = {4, 9};
-    //initilalisation du timer
+    
+//initilalisation du timer
     clock_t start = clock();
     int timer = 120; // 120 secondes pour le timer
 
@@ -185,7 +186,7 @@ int main() {
             DeplacementJoueur(PositionJoueur, pos, Obstacle);
             Affichage(Tableau, PositionJoueur, Obstacle);
 
-            // Mise à jour et affichage du timer
+            // Mise à jour  du timer
             clock_t end = clock();
             double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
             if (elapsed >= 1.0) {
