@@ -28,7 +28,7 @@ void InitialisationMatrice(char Tableau[ligne][colonne]) {
         }
     }
 }
-/*affichage du tableau, de la position du joueur et de la position des obstacle*/
+//affichage du tableau, de la position du joueur et de la position des obstacle
 void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obstacle]) {
     int indicateur = 0;
     for (int i = 0; i < ligne; i++) {
@@ -54,7 +54,7 @@ void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obsta
     }
     printf("\n");
 }
-/* cette fonction gere le deplacemnt du joueur en fonction de la touche qui a etait appuyée*/
+// cette fonction gere le deplacemnt du joueur en fonction de la touche qui a etait appuyée
 void DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle]) {
     int indicateur = 0;
     if (touche == 'q') {
@@ -159,6 +159,7 @@ int Vie(int nb_vies) {
 }
 
 int main() {
+//declaration des valiables
     int f = 0;
     int Obstacle[2][obstacle];
     char Tableau[ligne][colonne];
@@ -167,7 +168,7 @@ int main() {
     int nb_vies = 3;
     int NombreOiseaux=4;
     int PositionJoueur[2] = {4, 9};
-
+    //initilalisation du timer
     clock_t start = clock();
     int timer = 120; // 120 secondes pour le timer
 
@@ -176,6 +177,7 @@ int main() {
     Affichage(Tableau, PositionJoueur, Obstacle);
     AfficheTimer(timer);
 
+    // menu principale
     while (f != NombreOiseaux && timer > 0) {
         if (kbhit()) {
             pos = getch();
