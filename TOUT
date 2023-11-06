@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include<stdlib.h>
+#include <stdio.h>//utile pour les fonction d'entre et de sortie tel que printf et scanf
+#include<stdlib.h>//utile pour les fonctions memoire
 #include<conio.h>
-#include <time.h>
+#include <time.h>//utile pour manipuler la gestion du temps
 #include<unistd.h>
-/* definition des constante pour la taille du tableau et le nombre d'obstacle"/
+// definition des constante pour la taille du tableau et le nombre d'obstacle"
 #define ligne 10
 #define colonne 20
 #define obstacle 8
 
-/*creation matrice avec "*" pour les bordure*/ 
+//creation matrice avec "*" pour les bordure
 void InitialisationMatrice(char Tableau[ligne][colonne]) {
     char NvTableau[ligne][colonne] = {
             {'*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
