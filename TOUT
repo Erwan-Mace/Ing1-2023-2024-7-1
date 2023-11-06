@@ -54,7 +54,7 @@ void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obsta
     }
     printf("\n");
 }
-
+/* cette fonction gere le deplacemnt du joueur en fonction de la touche qui a etait appuyée*/
 void DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle]) {
     int indicateur = 0;
     if (touche == 'q') {
