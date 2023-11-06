@@ -14,8 +14,8 @@ void DeplacementJoueur(int PosJoueur[2], char touche) {
 }
 
 Dans le main on a:
-char NvTableau[ligne][colonne];
+char NvTableau[ligne][colonne]; // on definit un tableau a 2 dimensions ou ligne et colonne sont definis grace a #define ligne et #define colonne
 char pos=' ';
-int PositionJoueur[2] = {5, 10};
+int PositionJoueur[2] = {5, 10}; // on définit la position initiale du joueur
 pos=getch(); // permet de lire les touches saisies au clavier (ATTENTION il faut ajouter une bibliotheque specifique conio.h)
-DeplacementJoueur(PositionJoueur, pos);
+DeplacementJoueur(PositionJoueur, pos); // on appelle le sous programme DeplacementJoueur
