@@ -3,11 +3,12 @@
 #include<conio.h>
 #include <time.h>
 #include<unistd.h>
-
+/* definition des constante pour la taille du tableau et le nombre d'obstacle"/
 #define ligne 10
 #define colonne 20
 #define obstacle 8
 
+/*creation matrice avec "*" pour les bordure*/ 
 void InitialisationMatrice(char Tableau[ligne][colonne]) {
     char NvTableau[ligne][colonne] = {
             {'*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
@@ -27,7 +28,7 @@ void InitialisationMatrice(char Tableau[ligne][colonne]) {
         }
     }
 }
-
+/*affichage du tableau, de la position du joueur et de la position des obstacle*/
 void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obstacle]) {
     int indicateur = 0;
     for (int i = 0; i < ligne; i++) {
