@@ -459,6 +459,7 @@ void jeu(int niveau){
 
 
 int main() {
+//Ceci est la liste des mots de passe utilisé pour charger les différents niveaux. (inspirés des frères et soeurs de snoopy).
     char MDP1[] = "Andy";
     char MDP2[] = "Molly";
     char MDP3[] = "Spike";
