@@ -47,6 +47,7 @@ void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obsta
                         indicateur=1;
                     }
                 }
+//Affiche les obstacles dans la matrice.
                 for (int k = 0; k < obstacle; k++) {
                     if (Obstacle[0][k] == i && Obstacle[1][k] == j) {
                         printf("%c", 223);
