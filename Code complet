@@ -355,6 +355,7 @@ int gestionMDP(char MDP[],char Motdepasse1[], char Motdepasse2[], char Motdepass
     if(comparaison(MDP,Motdepasse1) == 1){
         value += 1;
         return value;
+//Ici value = 1 après vérification, cela signifie que l'on retourne 1 au main(), pour signifier d'éxécuter le niveau 1.
     }
     if(comparaison(MDP,Motdepasse2) == 1){
         value += 2;
