@@ -369,6 +369,7 @@ int gestionMDP(char MDP[],char Motdepasse1[], char Motdepasse2[], char Motdepass
         return value;
     }
     else {
+//Le cas échéant on retourne 5 qui va signifier au main() que le mot de passe saisi n'est pas valide.
         return 5;
     }
 }
