@@ -78,6 +78,7 @@ int menu(){
 }
 
 void DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle]) {
+//Effectue les déplacements du joueur dans la matrice en fonction de la touche pressée (zqsd), et gère une partie des obstacles.
     int indicateur = 0;
     if (touche == 'q') {
         if (PosJoueur[1] == 1) {
