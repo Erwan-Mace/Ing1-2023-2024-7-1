@@ -40,6 +40,7 @@ void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obsta
                 printf("P");
                 indicateur = 1;
             } else {
+//Affiche les pièges dans la matrice.
                 for(int z=0;z<PIEGE;z++){
                     if(Piege[0][z]==i && Piege[1][z]==j){
                         printf("%c",177);
