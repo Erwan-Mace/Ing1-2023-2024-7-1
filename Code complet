@@ -398,6 +398,7 @@ void gestionChoixNiveau(int niveau){
 }
 
 void jeu(int niveau){
+//Gère le programme coeur du jeu.
     int f = 0;
     int Obstacle[2][obstacle];
     char Tableau[ligne][colonne];
