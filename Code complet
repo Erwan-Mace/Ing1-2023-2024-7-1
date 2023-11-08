@@ -8,6 +8,7 @@
 
 #define ligne 10
 #define colonne 20
+//Définit le nombre de pièges et d'obstacles.
 #define obstacle 8
 #define PIEGE 6
 
