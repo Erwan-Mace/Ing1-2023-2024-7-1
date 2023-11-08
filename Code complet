@@ -338,6 +338,7 @@ void gestionObstacles(char Tab[ligne][colonne], char tabObstacle[obstacle], int 
 }
 
 int comparaison(char str1[], char str2[]){
+//Ici on compare si le mdp entré par l'utilisateur correspond à l'un des 4 mots de passes stockés dans la base de données.
     int value = 1;
         for(int i = 0; i < strlen(str1); i++){
             if(str1[i] != str2[i]){
