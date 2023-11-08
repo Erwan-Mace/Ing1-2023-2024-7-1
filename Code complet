@@ -350,6 +350,7 @@ int comparaison(char str1[], char str2[]){
 }
 
 int gestionMDP(char MDP[],char Motdepasse1[], char Motdepasse2[], char Motdepasse3[], char Motdepasse4[]){
+//On appelle la fonction précédente pour comparer le mdp choisi jusqu'a ce que l'on trouve une correspondance.
     int value = 0;
     if(comparaison(MDP,Motdepasse1) == 1){
         value += 1;
