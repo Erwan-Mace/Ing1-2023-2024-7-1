@@ -185,6 +185,7 @@ void InitialisationObstacle(int tab[2][obstacle]){
 }
 
 void AfficheTimer(int timer) {
+//Affiche le timer à l'écran en même temps que la matrice.
     printf("Temps restant : %d secondes\n", timer);
 }
 
