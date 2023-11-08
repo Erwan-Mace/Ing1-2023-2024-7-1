@@ -67,6 +67,7 @@ void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obsta
 }
 
 int menu(){
+//Définit l'interface de base du menu (ce que l'utilisateur voit en premier quand il lance le programme).
     int valmenu;
     printf("****************************************************************\n");
     printf("                       SNOOPY MAGIC SHOW                                      \n");
