@@ -108,6 +108,7 @@ void DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle]) {
             }
         }
         if(indicateur==0){
+//Si l'indicateur vaut 0, le joueur ne vas pas percuter d'obstacle.
             PosJoueur[1] = PosJoueur[1] + 1;
         }
     } else if (touche == 'z') {
