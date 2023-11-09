@@ -195,23 +195,6 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle], int 
     return 1;
 }
 
-/*
-void compte_a_rebours () {
-    int secondes = 120; // Temps imparti pour la partie
-
-    while (secondes > 0) { // Tant que le nombre de secondes n'a pas atteint 0
-        printf("Temps restant : %d secondes\n", secondes); // Afficher le nombre de secondes restantes
-        sleep(1); // Attendre 1 seconde
-        secondes--; // Le nombre de secondes diminue de 1 à chaque boucle
-        system("cls"); // Nettoyer la console
-    }
-
-    // Quand il ne reste plus de temps
-    printf("Time's up!\n");
-    sleep(1); // Attendre 1 seconde pour pouvoir lire
-}
-*/
-
 void InitialisationObstaclePiege(int Piege[2][PIEGE]) {
     int TabPiege[2][PIEGE] = {
             {4, 4,  1, 1,  8, 8,},
