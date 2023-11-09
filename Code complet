@@ -4,13 +4,27 @@
 #include <time.h>
 #include<unistd.h>
 #include <string.h>
-#include <pthread.h>
+//#include <pthread.h>
 
 #define ligne 10
 #define colonne 20
-//Définit le nombre de pièges et d'obstacles.
 #define obstacle 8
 #define PIEGE 6
+int vies = 3;
+
+int Vie(int nb_vies) {
+    nb_vies = nb_vies - 1;
+    return nb_vies;
+}
+
+int checkingVie(){
+    if(vies == 0){
+        return 'a';
+    }
+    else {
+        return 'b';
+    }
+}
 
 void InitialisationMatrice(char Tableau[ligne][colonne]) {
     char NvTableau[ligne][colonne] = {
@@ -40,14 +54,12 @@ void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obsta
                 printf("P");
                 indicateur = 1;
             } else {
-//Affiche les pièges dans la matrice.
-                for(int z=0;z<PIEGE;z++){
+                for (int z=0;z<PIEGE;z++){
                     if(Piege[0][z]==i && Piege[1][z]==j){
-                        printf("%c",177);
+                        printf("%c",224);
                         indicateur=1;
                     }
                 }
-//Affiche les obstacles dans la matrice.
                 for (int k = 0; k < obstacle; k++) {
                     if (Obstacle[0][k] == i && Obstacle[1][k] == j) {
                         printf("%c", 223);
@@ -67,7 +79,6 @@ void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obsta
 }
 
 int menu(){
-//Définit l'interface de base du menu (ce que l'utilisateur voit en premier quand il lance le programme).
     int valmenu;
     printf("****************************************************************\n");
     printf("                       SNOOPY MAGIC SHOW                                      \n");
@@ -77,8 +88,7 @@ int menu(){
     return valmenu;
 }
 
-void DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle]) {
-//Effectue les déplacements du joueur dans la matrice en fonction de la touche pressée (zqsd), et gère une partie des obstacles.
+int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle], int Piege[2][PIEGE]) {
     int indicateur = 0;
     if (touche == 'q') {
         if (PosJoueur[1] == 1) {
@@ -89,6 +99,16 @@ void DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle]) {
                 if (PosJoueur[0]==Obst[0][k] && PosJoueur[1]==Obst[1][k]+1) {
                     printf("Ceci est un obstacle\n ");
                     indicateur = 1;
+                }
+            }
+            for (int o = 0; o < PIEGE; o++) {
+                if (PosJoueur[0] == Piege[0][o] && PosJoueur[1] == Piege[1][o] + 1){
+                    system("cls");
+                    vies = Vie(vies);
+                    printf("Vies : %d\n", vies);
+                    sleep(2);
+                    system("cls");
+                    return 2;
                 }
             }
         }
@@ -106,9 +126,18 @@ void DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle]) {
                     indicateur = 1;
                 }
             }
+            for (int o = 0; o < PIEGE; o++) {
+                if (PosJoueur[0] == Piege[0][o] && PosJoueur[1] == Piege[1][o] - 1){
+                    system("cls");
+                    vies = Vie(vies);
+                    printf("Vies : %d\n", vies);
+                    sleep(2);
+                    system("cls");
+                    return 2;
+                }
+            }
         }
         if(indicateur==0){
-//Si l'indicateur vaut 0, le joueur ne vas pas percuter d'obstacle.
             PosJoueur[1] = PosJoueur[1] + 1;
         }
     } else if (touche == 'z') {
@@ -120,6 +149,16 @@ void DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle]) {
                 if (PosJoueur[0] == Obst[0][k] + 1 && PosJoueur[1] == Obst[1][k]) {
                     printf("Ceci est un obstacle\n");
                     indicateur = 1;
+                }
+            }
+            for (int o = 0; o < PIEGE; o++) {
+                if (PosJoueur[0] == Piege[0][o] + 1 && PosJoueur[1] == Piege[1][o]){
+                    system("cls");
+                    vies = Vie(vies);
+                    printf("Vies : %d\n", vies);
+                    sleep(2);
+                    system("cls");
+                    return 2;
                 }
             }
         }
@@ -137,12 +176,23 @@ void DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle]) {
                     indicateur = 1;
                 }
             }
+            for (int o = 0; o < PIEGE; o++) {
+                if (PosJoueur[0] == Piege[0][o] - 1 && PosJoueur[1] == Piege[1][o]){
+                    system("cls");
+                    vies = Vie(vies);
+                    printf("Vies : %d\n", vies);
+                    sleep(2);
+                    system("cls");
+                    return 2;
+                }
+            }
         }
         if(indicateur==0){
             PosJoueur[0] = PosJoueur[0] + 1;
         }
     }
     indicateur=0;
+    return 1;
 }
 
 /*
@@ -185,15 +235,10 @@ void InitialisationObstacle(int tab[2][obstacle]){
 }
 
 void AfficheTimer(int timer) {
-//Affiche le timer à l'écran en même temps que la matrice.
     printf("Temps restant : %d secondes\n", timer);
 }
 
-int Vie(int nb_vies) {
-    nb_vies = nb_vies - 1;
-    return nb_vies;
-}
-//En commentaire car je n'ai pas la bonne bibliothèque.
+
 //void deplacementBalle(int posBalle[2],char Tab[ligne][colonne]){
     /*
      * Pour la vitesse de la balle, il faut juste mettre le temps qu'il sécoule entre 2 déplacements de la balle. (temps qu'elle prend pour passer d'une case à l'autre).
@@ -300,7 +345,7 @@ int Vie(int nb_vies) {
     }
 }
 */
-//Pas encore complet car trop de blocs à gérer pour avant la mi-soutenance
+
 void gestionObstacles(char Tab[ligne][colonne], char tabObstacle[obstacle], int tabPiege[2][PIEGE], int posJoueur[2]){
     /*
      * Code ANSII pour les obstacles :
@@ -345,7 +390,6 @@ void gestionObstacles(char Tab[ligne][colonne], char tabObstacle[obstacle], int 
 }
 
 int comparaison(char str1[], char str2[]){
-//Ici on compare si le mdp entré par l'utilisateur correspond à l'un des 4 mots de passes stockés dans la base de données.
     int value = 1;
         for(int i = 0; i < strlen(str1); i++){
             if(str1[i] != str2[i]){
@@ -357,12 +401,10 @@ int comparaison(char str1[], char str2[]){
 }
 
 int gestionMDP(char MDP[],char Motdepasse1[], char Motdepasse2[], char Motdepasse3[], char Motdepasse4[]){
-//On appelle la fonction précédente pour comparer le mdp choisi jusqu'a ce que l'on trouve une correspondance.
     int value = 0;
     if(comparaison(MDP,Motdepasse1) == 1){
         value += 1;
         return value;
-//Ici value = 1 après vérification, cela signifie que l'on retourne 1 au main(), pour signifier d'éxécuter le niveau 1.
     }
     if(comparaison(MDP,Motdepasse2) == 1){
         value += 2;
@@ -377,7 +419,6 @@ int gestionMDP(char MDP[],char Motdepasse1[], char Motdepasse2[], char Motdepass
         return value;
     }
     else {
-//Le cas échéant on retourne 5 qui va signifier au main() que le mot de passe saisi n'est pas valide.
         return 5;
     }
 }
@@ -397,15 +438,13 @@ void gestionChoixNiveau(int niveau){
     }
 }
 
-void jeu(int niveau){
-//Gère le programme coeur du jeu.
+int jeu(int niveau){
     int f = 0;
     int Obstacle[2][obstacle];
     char Tableau[ligne][colonne];
     int Piege[2][PIEGE];
     char pos;
     char oiseaux = 'O';
-    int nb_vies = 3;
     int NombreOiseaux = 4;
     int PositionJoueur[2] = {4, 9};
     int positionBalle[2] = {3,7};
@@ -423,7 +462,21 @@ void jeu(int niveau){
             //deplacementBalle(positionBalle,Tableau);
             pos = getch();
             system("cls");
-            DeplacementJoueur(PositionJoueur, pos, Obstacle);
+            if(DeplacementJoueur(PositionJoueur, pos, Obstacle, Piege) == 2){
+                timer = 120;
+                PositionJoueur[0] = 4;
+                PositionJoueur[1] = 9;
+                if(checkingVie() == 'a'){
+                    system("cls");
+                    printf("Vous n'avez plus de vies...!\n");
+                    sleep(2);
+                    system("cls");
+                    printf("GAME OVER\n");
+                    sleep(2);
+                    system("cls");
+                    return 2;
+                }
+            }
             Affichage(Tableau, PositionJoueur, Obstacle, Piege);
             // Mise à jour et affichage du timer
             clock_t end = clock();
@@ -441,10 +494,10 @@ void jeu(int niveau){
         }
         // si le timer écoulé
         if (timer == 0) {
-            Vie(nb_vies);
-            if (Vie(nb_vies) > 0) {
+            Vie(vies);
+            if (Vie(vies) > 0) {
                 printf("\nLe temps est ecoule ! Vous avez perdu.\nIl ne vous reste plus que %d vies.\n",
-                       Vie(nb_vies));
+                       Vie(vies));
                 sleep(2);
             } else {
                 printf("\nVous n'avez plus de vie !\nAttendez avant de retenter votre chance.\n");
@@ -459,15 +512,15 @@ void jeu(int niveau){
         printf("Votre score est de...\n");
         sleep(2);
         printf("%d !\n",timer*100);
-        sleep(4);
+        sleep(2);
         printf("Merci d'avoir joue !\n");
         sleep(2);
     }
+    return 1;
 }
 
 
 int main() {
-//Ceci est la liste des mots de passe utilisé pour charger les différents niveaux. (inspirés des frères et soeurs de snoopy).
     char MDP1[] = "Andy";
     char MDP2[] = "Molly";
     char MDP3[] = "Spike";
@@ -480,7 +533,9 @@ int main() {
         printf("Chargement du premier niveau...\n");
         sleep(3);
         system("cls");
-        jeu(1);
+        if(jeu(1) == 2){
+           main();
+        }
     }
     else if(valmenu == 2) {
         system("cls");
@@ -488,6 +543,7 @@ int main() {
         printf("Quelle sauvegarde voulez-vous utiliser ?\n");
         scanf("%s",valsauvegarde);
         //Charger la sauvegarde du même nom.
+        //INTRODUIRE VIES
     }
     else if(valmenu == 3){
         system("cls");
@@ -495,12 +551,15 @@ int main() {
         printf("Entrez votre mot de passe : \n");
         scanf("%s",valmdp);
         int validation = gestionMDP(valmdp, MDP1,MDP2,MDP3,MDP4);
+        //INTRODUIRE VIES
         if(validation == 1){
             system("cls");
             printf("Chargement du premier niveau...\n");
             sleep(2);
             system("cls");
-            jeu(1);
+            if(jeu(1) == 2){
+                main();
+            }
             //Charger le premier niveau.
         }
         else if(validation == 2){
@@ -508,7 +567,9 @@ int main() {
             printf("Chargement du deuxieme niveau...\n");
             sleep(2);
             system("cls");
-            jeu(2);
+            if(jeu(2) == 2){
+                main();
+            }
             //Charger le deuxième niveau.
         }
         else if(validation == 3){
@@ -516,7 +577,9 @@ int main() {
             printf("Chargement du troisieme niveau...\n");
             sleep(2);
             system("cls");
-            jeu(3);
+            if(jeu(3) == 2){
+                main();
+            }
             //Charger le troisieme niveau.
         }
         else if(validation == 4){
@@ -524,7 +587,9 @@ int main() {
             printf("Chargement du quatrieme niveau...\n");
             sleep(2);
             system("cls");
-            jeu(4);
+            if(jeu(4) == 2){
+                main();
+            }
             //Charger le quatrieme niveau.
         }
         else {
@@ -543,7 +608,7 @@ int main() {
         printf("Une balle, designee par %c, rebondit à l interieur de l arene et peut eliminer le joueur si elle n est pas esquivee avec succes.\n",0x02);
         printf("Enfin, des blocs poussables, marques par %c, peuvent etre deplaces par le joueur. Ces blocs sont inoffensifs et ne causent aucun degat lorsqu ils sont pousses.\n",64);
         printf("Le but du jeu est de recuperer tous les oiseaux sans subir de degats des blocs tueurs ou de la balle rebondissante, tout en se servant judicieusement des blocs poussables pour faciliter la tache.\n");
-        printf("tout ceci dans les 120 secondes impartie");
+        printf("tout ceci dans les 120 secondes impartie.\n");
         sleep(20);
         system("cls");
         main(); //Retour au menu.
