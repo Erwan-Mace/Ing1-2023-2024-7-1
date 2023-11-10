@@ -6,10 +6,12 @@
 #include <string.h>
 //#include <pthread.h>
 
-#define ligne 10
-#define colonne 20
-#define obstacle 8
+#define LIGNE 10
+#define COLONNE 20
+#define OBSTACLE 8
 #define PIEGE 6
+#define OBSTACLE_DEPLACABLE 6
+#define OBSTACLE_CASSABLE 4
 int vies = 3;
 
 int Vie(int nb_vies) {
@@ -17,17 +19,16 @@ int Vie(int nb_vies) {
     return nb_vies;
 }
 
-int checkingVie(){
-    if(vies == 0){
+int checkingVie() {
+    if (vies == 0) {
         return 'a';
-    }
-    else {
+    } else {
         return 'b';
     }
 }
 
-void InitialisationMatrice(char Tableau[ligne][colonne]) {
-    char NvTableau[ligne][colonne] = {
+void InitialisationMatrice(char Tableau[LIGNE][COLONNE]) {
+    char NvTableau[LIGNE][COLONNE] = {
             {'*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
             {'*', 'O', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'O', '*'},
             {'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
@@ -39,30 +40,89 @@ void InitialisationMatrice(char Tableau[ligne][colonne]) {
             {'*', 'O', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'O', '*'},
             {'*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
     };
-    for (int i = 0; i < ligne; i++) {
-        for (int j = 0; j < colonne; j++) {
+    for (int i = 0; i < LIGNE; i++) {
+        for (int j = 0; j < COLONNE; j++) {
             Tableau[i][j] = NvTableau[i][j];
         }
     }
 }
 
-void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obstacle],int Piege[2][PIEGE]) {
+void InitialisationObstaclePiege(int Piege[2][PIEGE]) {
+    int TabPiege[2][PIEGE] = {
+            {4, 4,  1, 1,  8, 8,},
+            {7, 11, 4, 15, 4, 15}};
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < PIEGE; j++) {
+            Piege[i][j] = TabPiege[i][j];
+        }
+    }
+}
+
+void InitialisationObstacle(int tab[2][OBSTACLE]) {
+
+    int TabObstacle[2][OBSTACLE] = {
+            {2, 7, 2,  7,  2, 3, 5, 6},
+            {2, 2, 17, 17, 9, 9, 9, 9}};
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < OBSTACLE; j++) {
+            tab[i][j] = TabObstacle[i][j];
+        }
+    }
+}
+
+void InitialisationObstacleDeplacable(int Tableau[3][OBSTACLE_DEPLACABLE]) {
+    int NewTab[3][OBSTACLE_DEPLACABLE] = {
+            {4, 4,  1, 1,  8, 8},
+            {4, 13, 8, 14, 7, 13},
+            {0, 0,  0, 0,  0, 0,}};
+    for (int k = 0; k < 3; k++) {
+        for (int z = 0; z < OBSTACLE_DEPLACABLE; z++) {
+            Tableau[k][z] = NewTab[k][z];
+        }
+    }
+}
+
+void InitialisationObstacleCassable(int Tab[2][OBSTACLE_CASSABLE]) {
+    int ObstCassable[3][OBSTACLE_CASSABLE] = {
+            {3, 3,  6,  6},
+            {2, 16, 12, 6}};
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < OBSTACLE_CASSABLE; j++) {
+            Tab[i][j] = ObstCassable[i][j];
+        }
+    }
+}
+
+void Affichage(char Tab[LIGNE][COLONNE], int PosJoueur[2], int Obstacle[2][OBSTACLE], int Piege[2][PIEGE],
+               int ObstDeplacable[3][OBSTACLE_DEPLACABLE], int ObstCassable[2][OBSTACLE_CASSABLE]) {
     int indicateur = 0;
-    for (int i = 0; i < ligne; i++) {
-        for (int j = 0; j < colonne; j++) {
+    for (int i = 0; i < LIGNE; i++) {
+        for (int j = 0; j < COLONNE; j++) {
             if (PosJoueur[0] == i && PosJoueur[1] == j) {
                 printf("P");
                 indicateur = 1;
             } else {
-                for (int z=0;z<PIEGE;z++){
-                    if(Piege[0][z]==i && Piege[1][z]==j){
-                        printf("%c",224);
-                        indicateur=1;
+                for (int z = 0; z < PIEGE; z++) {
+                    if (Piege[0][z] == i && Piege[1][z] == j) {
+                        printf("%c", 178);
+                        indicateur = 1;
                     }
                 }
-                for (int k = 0; k < obstacle; k++) {
+                for (int k = 0; k < OBSTACLE; k++) {
                     if (Obstacle[0][k] == i && Obstacle[1][k] == j) {
                         printf("%c", 223);
+                        indicateur = 1;
+                    }
+                }
+                for (int y = 0; y < OBSTACLE_DEPLACABLE; y++) {
+                    if (ObstDeplacable[0][y] == i && ObstDeplacable[1][y] == j) {
+                        printf("%c", 244);
+                        indicateur = 1;
+                    }
+                }
+                for (int w = 0; w < OBSTACLE_CASSABLE; w++) {
+                    if (ObstCassable[0][w] == i && ObstCassable[1][w] == j) {
+                        printf("%c", 184);
                         indicateur = 1;
                     }
                 }
@@ -78,37 +138,60 @@ void Affichage(char Tab[ligne][colonne], int PosJoueur[2], int Obstacle[2][obsta
     printf("\n");
 }
 
-int menu(){
+int menu() {
     int valmenu;
     printf("****************************************************************\n");
     printf("                       SNOOPY MAGIC SHOW                                      \n");
     printf("****************************************************************\n");
     printf("\n 1 - Commencer une nouvelle partie\n 2 - Continuer\n 3 - Utiliser un mot de passe\n 4 - Regles du jeu\n 5 - Scores\n 6 - Quitter\n");
-    scanf("%d",&valmenu);
+    scanf("%d", &valmenu);
     return valmenu;
 }
 
-int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle], int Piege[2][PIEGE]) {
+int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][OBSTACLE], int Piege[2][PIEGE],
+                      int ObstDeplacable[3][OBSTACLE_DEPLACABLE], int ObsCassable[2][OBSTACLE_CASSABLE]) {
     int indicateur = 0;
     if (touche == 'q') {
         if (PosJoueur[1] == 1) {
             printf("AIE... Snoopy s'est cogne la tete contre le mur !\n");
             indicateur = 1;
         } else {
-            for (int k = 0; k < obstacle; k++) {
-                if (PosJoueur[0]==Obst[0][k] && PosJoueur[1]==Obst[1][k]+1) {
-                    printf("Ceci est un obstacle\n ");
+            for (int k = 0; k < OBSTACLE; k++) {
+                if (PosJoueur[0] == Obst[0][k] && PosJoueur[1] == Obst[1][k] + 1) {
+                    printf("Ceci est un obstacle...\n ");
                     indicateur = 1;
                 }
             }
-            for (int o = 0; o < PIEGE; o++) {
-                if (PosJoueur[0] == Piege[0][o] && PosJoueur[1] == Piege[1][o] + 1){
+            for (int y = 0; y < PIEGE; y++) {
+                if (PosJoueur[0] == Piege[0][y] && PosJoueur[1] == Piege[1][y] + 1) {
+                    system("cls");
+                    printf("BOOUUMM!!!\n");
+                    sleep(2);
                     system("cls");
                     vies = Vie(vies);
                     printf("Vies : %d\n", vies);
                     sleep(2);
                     system("cls");
                     return 2;
+                }
+            }
+            for (int p = 0; p < OBSTACLE_DEPLACABLE; p++) {
+                if (PosJoueur[0] == ObstDeplacable[0][p] && PosJoueur[1] == ObstDeplacable[1][p] + 1 &&
+                    ObstDeplacable[2][p] == 0) {
+                    ObstDeplacable[1][p] = ObstDeplacable[1][p] - 1;
+                    PosJoueur[1] = PosJoueur[1] - 1;
+                    ObstDeplacable[2][p] = 1;
+                    indicateur = 1;
+                } else {
+                    if (PosJoueur[0] == ObstDeplacable[0][p] && PosJoueur[1] == ObstDeplacable[1][p] + 1 &&
+                        ObstDeplacable[2][p] == 1) {
+                        indicateur = 1;
+                    }
+                }
+            }
+            for(int h=0;h<OBSTACLE_CASSABLE;h++){
+                if(PosJoueur[0]==ObsCassable[0][h] && PosJoueur[1]==ObsCassable[1][h]+1){
+                    indicateur=1;
                 }
             }
         }
@@ -118,16 +201,19 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle], int 
     } else if (touche == 'd') {
         if (PosJoueur[1] == 18) {
             printf("Snoopy s'est cogne la tete contre le mur ! Faites plus attention...\n");
-            indicateur=1;
+            indicateur = 1;
         } else {
-            for (int k = 0; k < obstacle; k++) {
+            for (int k = 0; k < OBSTACLE; k++) {
                 if (PosJoueur[0] == Obst[0][k] && PosJoueur[1] == Obst[1][k] - 1) {
                     printf("Ceci est un obstacle\n");
                     indicateur = 1;
                 }
             }
-            for (int o = 0; o < PIEGE; o++) {
-                if (PosJoueur[0] == Piege[0][o] && PosJoueur[1] == Piege[1][o] - 1){
+            for (int y = 0; y < PIEGE; y++) {
+                if (PosJoueur[0] == Piege[0][y] && PosJoueur[1] == Piege[1][y] - 1) {
+                    system("cls");
+                    printf("BOOUUMM!!!\n");
+                    sleep(2);
                     system("cls");
                     vies = Vie(vies);
                     printf("Vies : %d\n", vies);
@@ -136,23 +222,45 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle], int 
                     return 2;
                 }
             }
+            for (int p = 0; p < OBSTACLE_DEPLACABLE; p++) {
+                if (PosJoueur[0] == ObstDeplacable[0][p] && PosJoueur[1] == ObstDeplacable[1][p] - 1 &&
+                    ObstDeplacable[2][p] == 0) {
+                    ObstDeplacable[1][p] = ObstDeplacable[1][p] + 1;
+                    PosJoueur[1] = PosJoueur[1] + 1;
+                    ObstDeplacable[2][p] = 1;
+                    indicateur = 1;
+                } else {
+                    if (PosJoueur[0] == ObstDeplacable[0][p] && PosJoueur[1] == ObstDeplacable[1][p] - 1 &&
+                        ObstDeplacable[2][p] == 1) {
+                        indicateur = 1;
+                    }
+                }
+            }
+            for(int h=0;h<OBSTACLE_CASSABLE;h++){
+                if(PosJoueur[0]==ObsCassable[0][h] && PosJoueur[1]==ObsCassable[1][h]-1){
+                    indicateur=1;
+                }
+            }
         }
-        if(indicateur==0){
+        if (indicateur == 0) {
             PosJoueur[1] = PosJoueur[1] + 1;
         }
     } else if (touche == 'z') {
         if (PosJoueur[0] == 1) {
             printf("Snoopy s'est cogne la tete contre le mur ! Faites plus attention...\n");
-            indicateur=1;
+            indicateur = 1;
         } else {
-            for (int k = 0; k < obstacle; k++) {
+            for (int k = 0; k < OBSTACLE; k++) {
                 if (PosJoueur[0] == Obst[0][k] + 1 && PosJoueur[1] == Obst[1][k]) {
                     printf("Ceci est un obstacle\n");
                     indicateur = 1;
                 }
             }
-            for (int o = 0; o < PIEGE; o++) {
-                if (PosJoueur[0] == Piege[0][o] + 1 && PosJoueur[1] == Piege[1][o]){
+            for (int y = 0; y < PIEGE; y++) {
+                if (PosJoueur[0] == Piege[0][y] + 1 && PosJoueur[1] == Piege[1][y]) {
+                    system("cls");
+                    printf("BOOUUMM!!!\n");
+                    sleep(2);
                     system("cls");
                     vies = Vie(vies);
                     printf("Vies : %d\n", vies);
@@ -161,23 +269,56 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle], int 
                     return 2;
                 }
             }
+            for (int p = 0; p < OBSTACLE_DEPLACABLE; p++) {
+                if (PosJoueur[1] == ObstDeplacable[1][p] && PosJoueur[0] == ObstDeplacable[0][p] + 1 &&
+                    ObstDeplacable[2][p] == 0) {
+                    ObstDeplacable[0][p] = ObstDeplacable[0][p] - 1;
+                    PosJoueur[0] = PosJoueur[0] - 1;
+                    ObstDeplacable[2][p] = 1;
+                    indicateur = 1;
+                } else {
+                    if (PosJoueur[1] == ObstDeplacable[1][p] && PosJoueur[0] == ObstDeplacable[0][p] + 1 &&
+                        ObstDeplacable[2][p] == 1) {
+                        indicateur = 1;
+                    }
+                }
+            }
+            for(int h=0;h<OBSTACLE_CASSABLE;h++){
+                if(PosJoueur[1]==ObsCassable[1][h] && PosJoueur[0]==ObsCassable[0][h]+1){
+                    indicateur=1;
+                }
+            }
         }
-        if(indicateur==0){
+        if (indicateur == 0) {
             PosJoueur[0] = PosJoueur[0] - 1;
         }
     } else if (touche == 's') {
         if (PosJoueur[0] == 8) {
             printf("Snoopy s'est cogne la tete contre le mur ! Faites plus attention...\n");
-            indicateur=1;
-        } else {
-            for (int k = 0; k < obstacle; k++) {
-                if (PosJoueur[0] == Obst[0][k] - 1 && PosJoueur[1] == Obst[1][k]) {
-                    printf("Ceci est un obstacle\n");
+            indicateur = 1;
+        }
+    } else if (touche == 'c') {
+        for (int w = 0; w < OBSTACLE_CASSABLE; w++) {
+            if (PosJoueur[0] == ObsCassable[0][w] && PosJoueur[1] == ObsCassable[1][w] - 1 ||
+                PosJoueur[0] == ObsCassable[0][w] && PosJoueur[1] == ObsCassable[1][w] + 1 ||
+                PosJoueur[1] == ObsCassable[1][w] && PosJoueur[0] == ObsCassable[0][w] - 1 ||
+                PosJoueur[1] == ObsCassable[1][w] && PosJoueur[0] == ObsCassable[0][w] + 1) {
+                ObsCassable[0][w] = 12;
+                ObsCassable[1][w] = 0;
+            }
+        }
+    } else {
+        for (int k = 0; k < OBSTACLE; k++) {
+            if (PosJoueur[0] == Obst[0][k] - 1 && PosJoueur[1] == Obst[1][k]) {
+                printf("Ceci est un obstacle\n");
                     indicateur = 1;
                 }
             }
-            for (int o = 0; o < PIEGE; o++) {
-                if (PosJoueur[0] == Piege[0][o] - 1 && PosJoueur[1] == Piege[1][o]){
+            for (int y = 0; y < PIEGE; y++) {
+                if (PosJoueur[0] == Piege[0][y] - 1 && PosJoueur[1] == Piege[1][y]) {
+                    system("cls");
+                    printf("BOOUUMM!!!\n");
+                    sleep(2);
                     system("cls");
                     vies = Vie(vies);
                     printf("Vies : %d\n", vies);
@@ -186,36 +327,33 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][obstacle], int 
                     return 2;
                 }
             }
+        for (int p = 0; p < OBSTACLE_DEPLACABLE; p++) {
+            if (PosJoueur[1] == ObstDeplacable[1][p] && PosJoueur[0] == ObstDeplacable[0][p] - 1 &&
+                ObstDeplacable[2][p] == 0) {
+                ObstDeplacable[0][p] = ObstDeplacable[0][p] + 1;
+                PosJoueur[0] = PosJoueur[0] + 1;
+                ObstDeplacable[2][p] = 1;
+                indicateur = 1;
+            } else {
+                if (PosJoueur[1] == ObstDeplacable[1][p] && PosJoueur[0] == ObstDeplacable[0][p] - 1 &&
+                    ObstDeplacable[2][p] == 1) {
+                    indicateur = 1;
+                }
+            }
         }
-        if(indicateur==0){
+        for(int h=0;h<OBSTACLE_CASSABLE;h++){
+            if(PosJoueur[1]==ObsCassable[1][h] && PosJoueur[0]==ObsCassable[0][h]-1){
+                indicateur=1;
+            }
+        }
+        if (indicateur == 0) {
             PosJoueur[0] = PosJoueur[0] + 1;
         }
     }
-    indicateur=0;
+    indicateur = 0;
     return 1;
-}
-
-void InitialisationObstaclePiege(int Piege[2][PIEGE]) {
-    int TabPiege[2][PIEGE] = {
-            {4, 4,  1, 1,  8, 8,},
-            {7, 11, 4, 15, 4, 15}};
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < PIEGE; j++) {
-            Piege[i][j] = TabPiege[i][j];
-        }
     }
-}
 
-void InitialisationObstacle(int tab[2][obstacle]){
-
-    int TabObstacle[2][obstacle]={
-            {2,7,2,7,2,3,5,6},{2,2,17,17,9,9,9,9}};
-    for(int i=0;i<2;i++){
-        for(int j=0;j<obstacle;j++){
-            tab[i][j]=TabObstacle[i][j];
-        }
-    }
-}
 
 void AfficheTimer(int timer) {
     printf("Temps restant : %d secondes\n", timer);
@@ -223,113 +361,113 @@ void AfficheTimer(int timer) {
 
 
 //void deplacementBalle(int posBalle[2],char Tab[ligne][colonne]){
-    /*
-     * Pour la vitesse de la balle, il faut juste mettre le temps qu'il sécoule entre 2 déplacements de la balle. (temps qu'elle prend pour passer d'une case à l'autre).
-     */
-    /*
-    int posBalleint[2] = {posBalle[0],posBalle[1]};
-    while(1){
-        if(posBalle[0] == 1){
-            if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[1] + 1){
-                while(!(posBalle[0] == 8 || posBalle[1] == 18)){
-                    posBalleint[0] = posBalle[0];
-                    posBalleint[1] = posBalle[1];
-                    posBalle[0] += 1;
-                    posBalle[1] += 1;
-                    Tab[posBalle[0]][posBalle[1]] = 'B';
-                    Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                    sleep(1);
-                }
-            }
-            else if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] + 1){
-                while(!(posBalle[0] == 8 || posBalle[1] == 1)){
-                    posBalleint[0] = posBalle[0];
-                    posBalleint[1] = posBalle[1];
-                    posBalle[0] += 1;
-                    posBalle[1] -= 1;
-                    Tab[posBalle[0]][posBalle[1]] = 'B';
-                    Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                    sleep(1);
-                }
+/*
+ * Pour la vitesse de la balle, il faut juste mettre le temps qu'il sécoule entre 2 déplacements de la balle. (temps qu'elle prend pour passer d'une case à l'autre).
+ */
+/*
+int posBalleint[2] = {posBalle[0],posBalle[1]};
+while(1){
+    if(posBalle[0] == 1){
+        if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[1] + 1){
+            while(!(posBalle[0] == 8 || posBalle[1] == 18)){
+                posBalleint[0] = posBalle[0];
+                posBalleint[1] = posBalle[1];
+                posBalle[0] += 1;
+                posBalle[1] += 1;
+                Tab[posBalle[0]][posBalle[1]] = 'B';
+                Tab[posBalleint[0]][posBalleint[1]] = ' ';
+                sleep(1);
             }
         }
-        else if(posBalle[0] == 8){
-            if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[0] - 1){
-                while(!(posBalle[0] == 1 || posBalle[1] == 18)){
-                    posBalleint[0] = posBalle[0];
-                    posBalleint[1] = posBalle[1];
-                    posBalle[0] -= 1;
-                    posBalle[1] += 1;
-                    Tab[posBalle[0]][posBalle[1]] = 'B';
-                    Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                    sleep(1);
-                }
-            }
-            else if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[1] + 1){
-                while(!(posBalle[0] == 1 || posBalle[1] == 1)){
-                    posBalleint[0] = posBalle[0];
-                    posBalleint[1] = posBalle[1];
-                    posBalle[0] -= 1;
-                    posBalle[1] -= 1;
-                    Tab[posBalle[0]][posBalle[1]] = 'B';
-                    Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                    sleep(1);
-                }
+        else if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] + 1){
+            while(!(posBalle[0] == 8 || posBalle[1] == 1)){
+                posBalleint[0] = posBalle[0];
+                posBalleint[1] = posBalle[1];
+                posBalle[0] += 1;
+                posBalle[1] -= 1;
+                Tab[posBalle[0]][posBalle[1]] = 'B';
+                Tab[posBalleint[0]][posBalleint[1]] = ' ';
+                sleep(1);
             }
         }
-        else if(posBalle[1] == 1){
-            if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] + 1){
-                while(posBalle[0] != 1){
-                    posBalleint[0] = posBalle[0];
-                    posBalleint[1] = posBalle[1];
-                    posBalle[0] -= 1;
-                    posBalle[1] += 1;
-                    Tab[posBalle[0]][posBalle[1]] = 'B';
-                    Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                    sleep(1);
-                }
-            }
-            else if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[0] + 1){
-                while(posBalle[0] != 8){
-                    posBalleint[0] = posBalle[0];
-                    posBalleint[1] = posBalle[1];
-                    posBalle[0] += 1;
-                    posBalle[1] += 1;
-                    Tab[posBalle[0]][posBalle[1]] = 'B';
-                    Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                    sleep(1);
-                }
+    }
+    else if(posBalle[0] == 8){
+        if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[0] - 1){
+            while(!(posBalle[0] == 1 || posBalle[1] == 18)){
+                posBalleint[0] = posBalle[0];
+                posBalleint[1] = posBalle[1];
+                posBalle[0] -= 1;
+                posBalle[1] += 1;
+                Tab[posBalle[0]][posBalle[1]] = 'B';
+                Tab[posBalleint[0]][posBalleint[1]] = ' ';
+                sleep(1);
             }
         }
-        else if(posBalle[1] == 18){
-            if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] + 1){
-                while(posBalle[0] != 8){
-                    posBalleint[0] = posBalle[0];
-                    posBalleint[1] = posBalle[1];
-                    posBalle[0] += 1;
-                    posBalle[1] -= 1;
-                    Tab[posBalle[0]][posBalle[1]] = 'B';
-                    Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                    sleep(1);
-                }
+        else if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[1] + 1){
+            while(!(posBalle[0] == 1 || posBalle[1] == 1)){
+                posBalleint[0] = posBalle[0];
+                posBalleint[1] = posBalle[1];
+                posBalle[0] -= 1;
+                posBalle[1] -= 1;
+                Tab[posBalle[0]][posBalle[1]] = 'B';
+                Tab[posBalleint[0]][posBalleint[1]] = ' ';
+                sleep(1);
             }
-            else if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] - 1){
-                while(posBalle[0] != 1){
-                    posBalleint[0] = posBalle[0];
-                    posBalleint[1] = posBalle[1];
-                    posBalle[0] -= 1;
-                    posBalle[1] -= 1;
-                    Tab[posBalle[0]][posBalle[1]] = 'B';
-                    Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                    sleep(1);
-                }
+        }
+    }
+    else if(posBalle[1] == 1){
+        if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] + 1){
+            while(posBalle[0] != 1){
+                posBalleint[0] = posBalle[0];
+                posBalleint[1] = posBalle[1];
+                posBalle[0] -= 1;
+                posBalle[1] += 1;
+                Tab[posBalle[0]][posBalle[1]] = 'B';
+                Tab[posBalleint[0]][posBalleint[1]] = ' ';
+                sleep(1);
+            }
+        }
+        else if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[0] + 1){
+            while(posBalle[0] != 8){
+                posBalleint[0] = posBalle[0];
+                posBalleint[1] = posBalle[1];
+                posBalle[0] += 1;
+                posBalle[1] += 1;
+                Tab[posBalle[0]][posBalle[1]] = 'B';
+                Tab[posBalleint[0]][posBalleint[1]] = ' ';
+                sleep(1);
+            }
+        }
+    }
+    else if(posBalle[1] == 18){
+        if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] + 1){
+            while(posBalle[0] != 8){
+                posBalleint[0] = posBalle[0];
+                posBalleint[1] = posBalle[1];
+                posBalle[0] += 1;
+                posBalle[1] -= 1;
+                Tab[posBalle[0]][posBalle[1]] = 'B';
+                Tab[posBalleint[0]][posBalleint[1]] = ' ';
+                sleep(1);
+            }
+        }
+        else if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] - 1){
+            while(posBalle[0] != 1){
+                posBalleint[0] = posBalle[0];
+                posBalleint[1] = posBalle[1];
+                posBalle[0] -= 1;
+                posBalle[1] -= 1;
+                Tab[posBalle[0]][posBalle[1]] = 'B';
+                Tab[posBalleint[0]][posBalleint[1]] = ' ';
+                sleep(1);
             }
         }
     }
 }
+}
 */
 
-void gestionObstacles(char Tab[ligne][colonne], char tabObstacle[obstacle], int tabPiege[2][PIEGE], int posJoueur[2]){
+void gestionObstacles(char Tab[LIGNE][COLONNE], char tabObstacle[OBSTACLE], int tabPiege[2][PIEGE], int posJoueur[2]) {
     /*
      * Code ANSII pour les obstacles :
      * 1 (bloc cassable) ♠ = 0x06
@@ -342,29 +480,24 @@ void gestionObstacles(char Tab[ligne][colonne], char tabObstacle[obstacle], int 
      * 8 (Snoopy) ♂ = 0x0B
      * 9 (oiseau) ♫ = 0x0E
      */
-    for(int i = 0; i < obstacle ; i++){
-        if(Tab[posJoueur[0]][posJoueur[1]] == tabObstacle[i]){
-            if(tabObstacle[i] == 0x06){
+    for (int i = 0; i < OBSTACLE; i++) {
+        if (Tab[posJoueur[0]][posJoueur[1]] == tabObstacle[i]) {
+            if (tabObstacle[i] == 0x06) {
                 printf("Ce bloc à l'air fragile...\n");
                 //Animation du bloc cassable.
-            }
-            else if(tabObstacle[i] == 0x1A){
+            } else if (tabObstacle[i] == 0x1A) {
                 printf("Ce bloc n'a pas l'air bien lourd...\n");
                 //Animation du bloc poussable.
-            }
-            else if(tabObstacle[i] == 0x05){
+            } else if (tabObstacle[i] == 0x05) {
                 printf("Game Over !\n");
                 //Retour au menu.
-            }
-            else if(tabObstacle[i] == 0x0F){
+            } else if (tabObstacle[i] == 0x0F) {
                 printf("Essayons un autre chemin...\n");
                 //Comme ya marqué au dessus.
-            }
-            else if(tabObstacle[i] == 0x0A){
+            } else if (tabObstacle[i] == 0x0A) {
                 printf("Teleportation...\n");
                 //Animation du bloc de téléportation.
-            }
-            else if(tabObstacle[i] == 0x16){
+            } else if (tabObstacle[i] == 0x16) {
                 printf("Roule Snoopy, Roule !\n");
                 //Animation du bloc de tapis roulant.
             }
@@ -372,48 +505,47 @@ void gestionObstacles(char Tab[ligne][colonne], char tabObstacle[obstacle], int 
     }
 }
 
-int comparaison(char str1[], char str2[]){
+int comparaison(char str1[], char str2[]) {
     int value = 1;
-        for(int i = 0; i < strlen(str1); i++){
-            if(str1[i] != str2[i]){
-                value = 0;
-                return value;
-            }
+    for (int i = 0; i < strlen(str1); i++) {
+        if (str1[i] != str2[i]) {
+            value = 0;
+            return value;
         }
+    }
     return value;
 }
 
-int gestionMDP(char MDP[],char Motdepasse1[], char Motdepasse2[], char Motdepasse3[], char Motdepasse4[]){
+int gestionMDP(char MDP[], char Motdepasse1[], char Motdepasse2[], char Motdepasse3[], char Motdepasse4[]) {
     int value = 0;
-    if(comparaison(MDP,Motdepasse1) == 1){
+    if (comparaison(MDP, Motdepasse1) == 1) {
         value += 1;
         return value;
     }
-    if(comparaison(MDP,Motdepasse2) == 1){
+    if (comparaison(MDP, Motdepasse2) == 1) {
         value += 2;
         return value;
     }
-    if(comparaison(MDP,Motdepasse3) == 1){
+    if (comparaison(MDP, Motdepasse3) == 1) {
         value += 3;
         return value;
     }
-    if(comparaison(MDP,Motdepasse4) == 1){
+    if (comparaison(MDP, Motdepasse4) == 1) {
         value += 4;
         return value;
-    }
-    else {
+    } else {
         return 5;
     }
 }
 
-void gestionChoixNiveau(int niveau){
+void gestionChoixNiveau(int niveau) {
     FILE *Niveau1;
     FILE *Niveau2;
     FILE *Niveau3;
     FILE *Niveau4;
-    if(niveau == 1){
-        Niveau1 = fopen("niveau1.txt","r");
-        if(Niveau1 == NULL){
+    if (niveau == 1) {
+        Niveau1 = fopen("niveau1.txt", "r");
+        if (Niveau1 == NULL) {
             printf("Impossible d'ouvrir le fichier.");
             return;
         }
@@ -421,23 +553,28 @@ void gestionChoixNiveau(int niveau){
     }
 }
 
-int jeu(int niveau){
+int jeu(int niveau) {
     int f = 0;
-    int Obstacle[2][obstacle];
-    char Tableau[ligne][colonne];
+    int Obstacle[2][OBSTACLE];
+    char Tableau[LIGNE][COLONNE];
     int Piege[2][PIEGE];
+    int ObstDeplacable[3][OBSTACLE_DEPLACABLE];
+    int ObstCassable[2][OBSTACLE_CASSABLE];
     char pos;
     char oiseaux = 'O';
     int NombreOiseaux = 4;
     int PositionJoueur[2] = {4, 9};
-    int positionBalle[2] = {3,7};
+    int positionBalle[2] = {3, 7};
 
     clock_t start = clock();
     int timer = 120; // 120 secondes pour le timer
     InitialisationMatrice(Tableau);
     InitialisationObstacle(Obstacle);
     InitialisationObstaclePiege(Piege);
-    Affichage(Tableau, PositionJoueur, Obstacle,Piege);
+    InitialisationObstacleDeplacable(ObstDeplacable);
+    InitialisationObstacleCassable(ObstCassable);
+
+    Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable,ObstCassable);
     AfficheTimer(timer);
 
     while (f != NombreOiseaux && timer > 0) {
@@ -445,11 +582,11 @@ int jeu(int niveau){
             //deplacementBalle(positionBalle,Tableau);
             pos = getch();
             system("cls");
-            if(DeplacementJoueur(PositionJoueur, pos, Obstacle, Piege) == 2){
+            if (DeplacementJoueur(PositionJoueur, pos, Obstacle, Piege, ObstDeplacable,ObstCassable) == 2) {
                 timer = 120;
                 PositionJoueur[0] = 4;
                 PositionJoueur[1] = 9;
-                if(checkingVie() == 'a'){
+                if (checkingVie() == 'a') {
                     system("cls");
                     printf("Vous n'avez plus de vies...!\n");
                     sleep(2);
@@ -460,7 +597,7 @@ int jeu(int niveau){
                     return 2;
                 }
             }
-            Affichage(Tableau, PositionJoueur, Obstacle, Piege);
+            Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable,ObstCassable);
             // Mise à jour et affichage du timer
             clock_t end = clock();
             double elapsed = (double) (end - start) / CLOCKS_PER_SEC;
@@ -494,7 +631,7 @@ int jeu(int niveau){
         sleep(2);
         printf("Votre score est de...\n");
         sleep(2);
-        printf("%d !\n",timer*100);
+        printf("%d !\n", timer * 100);
         sleep(2);
         printf("Merci d'avoir joue !\n");
         sleep(2);
@@ -508,7 +645,7 @@ int main() {
     char MDP2[] = "Molly";
     char MDP3[] = "Spike";
     char MDP4[] = "Olaf";
-    char tabMDP[4] = {MDP1[strlen(MDP1)],MDP2[strlen(MDP2)],MDP3[strlen(MDP3)],MDP4[strlen(MDP4)]};
+    char tabMDP[4] = {MDP1[strlen(MDP1)], MDP2[strlen(MDP2)], MDP3[strlen(MDP3)], MDP4[strlen(MDP4)]};
     int valmenu = menu();
 
     if (valmenu == 1) {
@@ -516,87 +653,83 @@ int main() {
         printf("Chargement du premier niveau...\n");
         sleep(3);
         system("cls");
-        if(jeu(1) == 2){
-           main();
+        if (jeu(1) == 2) {
+            main();
         }
-    }
-    else if(valmenu == 2) {
+    } else if (valmenu == 2) {
         system("cls");
         char valsauvegarde[50];
         printf("Quelle sauvegarde voulez-vous utiliser ?\n");
-        scanf("%s",valsauvegarde);
+        scanf("%s", valsauvegarde);
         //Charger la sauvegarde du même nom.
         //INTRODUIRE VIES
-    }
-    else if(valmenu == 3){
+    } else if (valmenu == 3) {
         system("cls");
         char valmdp[100];
         printf("Entrez votre mot de passe : \n");
-        scanf("%s",valmdp);
-        int validation = gestionMDP(valmdp, MDP1,MDP2,MDP3,MDP4);
+        scanf("%s", valmdp);
+        int validation = gestionMDP(valmdp, MDP1, MDP2, MDP3, MDP4);
         //INTRODUIRE VIES
-        if(validation == 1){
+        if (validation == 1) {
             system("cls");
             printf("Chargement du premier niveau...\n");
             sleep(2);
             system("cls");
-            if(jeu(1) == 2){
+            if (jeu(1) == 2) {
                 main();
             }
             //Charger le premier niveau.
-        }
-        else if(validation == 2){
+        } else if (validation == 2) {
             system("cls");
             printf("Chargement du deuxieme niveau...\n");
             sleep(2);
             system("cls");
-            if(jeu(2) == 2){
+            if (jeu(2) == 2) {
                 main();
             }
             //Charger le deuxième niveau.
-        }
-        else if(validation == 3){
+        } else if (validation == 3) {
             system("cls");
             printf("Chargement du troisieme niveau...\n");
             sleep(2);
             system("cls");
-            if(jeu(3) == 2){
+            if (jeu(3) == 2) {
                 main();
             }
             //Charger le troisieme niveau.
-        }
-        else if(validation == 4){
+        } else if (validation == 4) {
             system("cls");
             printf("Chargement du quatrieme niveau...\n");
             sleep(2);
             system("cls");
-            if(jeu(4) == 2){
+            if (jeu(4) == 2) {
                 main();
             }
             //Charger le quatrieme niveau.
-        }
-        else {
+        } else {
             system("cls");
             printf("Le mot de passe que vous avez saisi n'est pas dans la base de donnees...\n");
             sleep(2);
             system("cls");
             main();   //Retour au menu.
         }
-    }
-    else if(valmenu == 4){
+    } else if (valmenu == 4) {
         system("cls");
         printf("Dans l'arene, quatre oiseaux, representes par le symbole 'O', sont places aux quatre coins. Le joueur, incarne par le caractere 'P', doit les collecter tous.\n");
-        printf("Cependant, des precautions doivent etre prises pour eviter les blocs tueurs symbolises par %c. Ces derniers sont mortels au contact.\n",177);
-        printf("L'arene comprend egalement des blocs immobiles, egalement representes par %c, qui servent d obstacles.\n",223);
-        printf("Une balle, designee par %c, rebondit à l interieur de l arene et peut eliminer le joueur si elle n est pas esquivee avec succes.\n",0x02);
-        printf("Enfin, des blocs poussables, marques par %c, peuvent etre deplaces par le joueur. Ces blocs sont inoffensifs et ne causent aucun degat lorsqu ils sont pousses.\n",64);
+        printf("Cependant, des precautions doivent etre prises pour eviter les blocs tueurs symbolises par %c. Ces derniers sont mortels au contact.\n",
+               177);
+        printf("L'arene comprend egalement des blocs immobiles, egalement representes par %c, qui servent d obstacles.\n",
+               223);
+        printf("Une balle, designee par %c, rebondit à l interieur de l arene et peut eliminer le joueur si elle n est pas esquivee avec succes.\n",
+               0x02);
+        printf("Enfin, des blocs poussables, marques par %c, peuvent etre deplaces par le joueur. Ces blocs sont inoffensifs et ne causent aucun degat lorsqu ils sont pousses.\n",
+               64);
         printf("Le but du jeu est de recuperer tous les oiseaux sans subir de degats des blocs tueurs ou de la balle rebondissante, tout en se servant judicieusement des blocs poussables pour faciliter la tache.\n");
         printf("tout ceci dans les 120 secondes impartie.\n");
         sleep(20);
         system("cls");
         main(); //Retour au menu.
-    }
-    else if(valmenu == 5){
+    } else if (valmenu == 5) {
         system("cls");
         printf("Voici les scores : \n[Fichier de sauvegarde] : \n[Fichier de sauvegarde] : \n[Fihcier de sauvegarde] : \n[Fichier de sauvegarde] : \n");
         //Pensez à mettre une boucle for pour avoir le nombre de fichiers de sauvegarde et à ne pas afficher des valeurs vides...
@@ -604,8 +737,7 @@ int main() {
         system("cls");
         //Afficher les scores ici.
         main(); //Retour au menu.
-    }
-    else if(valmenu == 6){
+    } else if (valmenu == 6) {
         return 0;     //Fin de jeu.
     }
 }
