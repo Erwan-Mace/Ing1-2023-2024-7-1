@@ -1,7 +1,0 @@
-int menu(){
-    int valmenu = 0;
-    printf("Bienvenue !\n 1 - Commencer une nouvelle partie\n 2 - Continuer\n 3 - Utiliser un mot de passe\n 4 - Regles du jeu\n 5 - Scores\n 6 - Quitter");
-    scanf("%d",&valmenu);
-    return valmenu;
-}
-
