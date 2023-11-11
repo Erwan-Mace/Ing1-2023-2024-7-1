@@ -593,6 +593,7 @@ int jeu(int niveau) {
                     system("cls");
                     printf("GAME OVER\n");
                     sleep(2);
+                    vies = 3;
                     system("cls");
                     return 2;
                 }
