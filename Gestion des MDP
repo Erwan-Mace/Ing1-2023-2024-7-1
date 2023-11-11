@@ -1,0 +1,28 @@
+// Sous-programme de gestion des mots de passe
+int gestionMDP(char MDP[], char Motdepasse1[], char Motdepasse2[], char Motdepasse3[], char Motdepasse4[]) {
+    int value = 0; // Numéro des niveaux correspondant aux mots de passes saisis
+    // Si le mot de passe pour le niveau 1 saisi est juste
+    if (comparaison(MDP, Motdepasse1) == 1) {
+        value += 1;
+        return value; // Retourne le numéro du niveau correspondant au mot de passe
+    }
+    // Si le mot de passe pour le niveau 2 saisi est juste
+    if (comparaison(MDP, Motdepasse2) == 1) {
+        value += 2;
+        return value; // Retourne le numéro du niveau correspondant au mot de passe
+    }
+    // Si le mot de passe pour le niveau 3 saisi est juste
+    if (comparaison(MDP, Motdepasse3) == 1) {
+        value += 3;
+        return value; // Retourne le numéro du niveau correspondant au mot de passe
+    }
+    // Si le mot de passe pour le niveau 4 saisi est juste
+    if (comparaison(MDP, Motdepasse4) == 1) {
+        value += 4;
+        return value; // Retourne le numéro du niveau correspondant au mot de passe
+    }
+    // Si le mot de passe saisi ne correspond à aucun mot de passe enregistré
+    else {
+        return 5; // Commande le retour au menu
+    }
+}
