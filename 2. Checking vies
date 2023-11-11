@@ -1,0 +1,11 @@
+// Sous-programme qui vérifie l'état du nombre de vies
+int checkingVie() {
+    // Si le nombre de vies est égal à 0
+    if (vies == 0) {
+        return 'a'; // le sous-programme retourne le charactère a
+    }
+    // Si le nombre de vies est supériieur à 0
+    else {
+        return 'b'; // le sous-programme retourne le charactère b
+    }
+}
