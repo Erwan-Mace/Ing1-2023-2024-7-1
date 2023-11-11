@@ -1,0 +1,44 @@
+void Affichage(char Tab[LIGNE][COLONNE], int PosJoueur[2], int Obstacle[2][OBSTACLE], int Piege[2][PIEGE],
+               int ObstDeplacable[3][OBSTACLE_DEPLACABLE], int ObstCassable[2][OBSTACLE_CASSABLE]) {
+    int indicateur = 0;
+    for (int i = 0; i < LIGNE; i++) {
+        for (int j = 0; j < COLONNE; j++) {
+            if (PosJoueur[0] == i && PosJoueur[1] == j) {
+                printf("P");
+                indicateur = 1;
+            } else {
+                for (int z = 0; z < PIEGE; z++) {
+                    if (Piege[0][z] == i && Piege[1][z] == j) {
+                        printf("%c", 178);
+                        indicateur = 1;
+                    }
+                }
+                for (int k = 0; k < OBSTACLE; k++) {
+                    if (Obstacle[0][k] == i && Obstacle[1][k] == j) {
+                        printf("%c", 223);
+                        indicateur = 1;
+                    }
+                }
+                for (int y = 0; y < OBSTACLE_DEPLACABLE; y++) {
+                    if (ObstDeplacable[0][y] == i && ObstDeplacable[1][y] == j) {
+                        printf("%c", 244);
+                        indicateur = 1;
+                    }
+                }
+                for (int w = 0; w < OBSTACLE_CASSABLE; w++) {
+                    if (ObstCassable[0][w] == i && ObstCassable[1][w] == j) {
+                        printf("%c", 184);
+                        indicateur = 1;
+                    }
+                }
+            }
+            if (indicateur == 0) {
+                printf("%c", Tab[i][j]);
+            }
+            printf("|");
+            indicateur = 0;
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
