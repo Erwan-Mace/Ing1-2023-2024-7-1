@@ -1,3 +1,8 @@
+
+
+
+
+
 int jeu(int niveau) {
     int f = 0;
     int Obstacle[2][OBSTACLE];
@@ -83,3 +88,347 @@ int jeu(int niveau) {
     }
     return 1;
 }
+
+// Sous-programme gérant le choix des niveaux
+
+void gestionChoixNiveau(int niveau) {
+
+    // Attribution des fichiers textes à chaque niveau
+
+    FILE *Niveau1;
+
+    FILE *Niveau2;
+
+    FILE *Niveau3;
+
+    FILE *Niveau4;
+
+    // Si le niveau 1 est choisi
+
+    if (niveau == 1) {
+
+        // Le fichier texte du niveau 1 est appelé
+
+        Niveau1 = fopen("niveau1.txt", "r");
+
+        // Message d'erreur
+
+        if (Niveau1 == NULL) {
+
+            printf("Impossible d'ouvrir le fichier.");
+
+            return;
+
+        }
+
+    }
+
+}
+
+
+
+// Sous-programme gérant la partie du jeu
+
+int jeu(int niveau) {
+
+    int f = 0;
+
+    int Obstacle[2][OBSTACLE];
+
+    char Tableau[LIGNE][COLONNE];
+
+    int Piege[2][PIEGE];
+
+    int ObstDeplacable[3][OBSTACLE_DEPLACABLE];
+
+    int ObstCassable[2][OBSTACLE_CASSABLE];
+
+    char pos;
+
+    char oiseaux = 'O';
+
+    int NombreOiseaux = 4;
+
+    int PositionJoueur[2] = {4, 9};
+
+    int positionBalle[2] = {3, 7};
+
+
+
+    // Départ du timer
+
+    clock_t start = clock();
+
+    int timer = 120; // 120 secondes pour le timer
+
+    // Appels des sous-programmes initialisant la matrice, les blocs fixes, piégés, deplacables et cassables
+
+    InitialisationMatrice(Tableau);
+
+    InitialisationObstacle(Obstacle);
+
+    InitialisationObstaclePiege(Piege);
+
+    InitialisationObstacleDeplacable(ObstDeplacable);
+
+    InitialisationObstacleCassable(ObstCassable);
+
+
+
+    // Appels des sous-programmes affichnt la matrice complète et le timer
+
+    Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable,ObstCassable);
+
+    AfficheTimer(timer);
+
+
+
+    // Tant que le tous les oiseaux n'ont pas été attrapés et que le timer ne s'est pas terminé
+
+    while (f != NombreOiseaux && timer > 0) {
+
+        // Si une touche du clavier est activée
+
+        if (kbhit()) {
+
+            //deplacementBalle(positionBalle,Tableau);
+
+            pos = getch(); // Prise en compte de la touche pressée sans avoir à presser ENTRER
+
+            system("cls"); // Nettoyer la console
+
+            if (DeplacementJoueur(PositionJoueur, pos, Obstacle, Piege, ObstDeplacable,ObstCassable) == 2) {
+
+                timer = 120;
+
+                PositionJoueur[0] = 4;
+
+                PositionJoueur[1] = 9;
+
+                // Si le nombre de vies restantes a atteint 0
+
+                if (checkingVie() == 'a') {
+
+                    system("cls"); // Nettoyer la console
+
+                    printf("Vous n'avez plus de vies...!\n");
+
+                    sleep(2); // Délai de 2 secondes
+
+                    system("cls"); // Nettoyer la console
+
+                    printf("GAME OVER\n");
+
+                    sleep(2); // Délai de 2 secondes
+
+                    system("cls"); // Nettoyer la console
+
+                    return 2; // Commande le retour au menu
+
+                }
+
+            }
+
+            // Affichage de la matrice complète avec les blocs et Snoopy
+
+            Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable,ObstCassable);
+
+            // Mise à jour et affichage du timer
+
+            clock_t end = clock();
+
+            // Calcul du temps restant
+
+            double elapsed = (double) (end - start) / CLOCKS_PER_SEC;
+
+            if (elapsed >= 1.0) {
+
+                timer -= (int) elapsed; // le timer prend la valeur du temps restant
+
+                start = clock(); // Réinitialisation du début pour le prochain tick
+
+            }
+
+            // Affichage du timer
+
+            AfficheTimer(timer);
+
+            // Si Snoopy va sur la position d'un oiseau
+
+            if (Tableau[PositionJoueur[0]][PositionJoueur[1]] == 'O') {
+
+                // Le nombre d'oiseaux attrapés augmente de 1
+
+                f++;
+
+                // Le symbole de l'oiseau est remplacé par une case vide
+
+                Tableau[PositionJoueur[0]][PositionJoueur[1]] = ' ';
+
+                // Affichage du nombre d'oiseaux qu'il reste à attraper
+
+                printf("\nVous avez attrape un oiseau! Il vous en reste %d a attraper.\n", NombreOiseaux - f);
+
+            }
+
+        }
+
+        // Si le timer est écoulé
+
+        if (timer == 0) {
+
+            // Appel du sous-programme calculant le nombre de vies restantes
+
+            Vie(vies);
+
+            // Si il reste plus de 0 vie
+
+            if (Vie(vies) > 0) {
+
+                // Le joueur perd une vie
+
+                printf("\nLe temps est ecoule ! Vous avez perdu.\nIl ne vous reste plus que %d vies.\n",
+
+                       Vie(vies));
+
+                sleep(2); // Délai de 2 secondes
+
+            }
+
+            // Si il ne reste déjà plus de vie
+
+            else {
+
+                printf("\nVous n'avez plus de vie !\nAttendez avant de retenter votre chance.\n");
+
+                sleep(2); // Délai de 2 secondes
+
+            }
+
+            break; // Retour au menu
+
+        }
+
+    }
+
+    // Si tous les oiseaux ont été attrapés
+
+    if (f == NombreOiseaux) {
+
+        printf("Bravo! Vous avez attrape tous les oiseaux!...\n");
+
+        sleep(2); // Délai de 2 secondes
+
+        printf("Votre score est de...\n");
+
+        sleep(2); // Délai de 2 secondes
+
+        // Affichage et calcul du score (temps restant * 100)
+
+        printf("%d !\n", timer * 100);
+
+        sleep(2); // Délai de 2 secondes
+
+        printf("Merci d'avoir joue !\n");
+
+        sleep(2); // Délai de 2 secondes
+
+    }
+
+    return 1; // Commande le retour au menu
+
+} 
+
+
+// Sous-programme gérant l'affichage de la matrice avec les différents blocs
+
+void Affichage(char Tab[LIGNE][COLONNE], int PosJoueur[2], int Obstacle[2][OBSTACLE], int Piege[2][PIEGE],
+
+               int ObstDeplacable[3][OBSTACLE_DEPLACABLE], int ObstCassable[2][OBSTACLE_CASSABLE]) {
+
+    int indicateur = 0;
+
+    for (int i = 0; i < LIGNE; i++) {
+
+        for (int j = 0; j < COLONNE; j++) {
+
+            if (PosJoueur[0] == i && PosJoueur[1] == j) {
+
+                printf("P");
+
+                indicateur = 1;
+
+            }
+
+            else {
+
+                for (int z = 0; z < PIEGE; z++) {
+
+                    if (Piege[0][z] == i && Piege[1][z] == j) {
+
+                        printf("%c", 178);
+
+                        indicateur = 1;
+
+                    }
+
+                }
+
+                for (int k = 0; k < OBSTACLE; k++) {
+
+                    if (Obstacle[0][k] == i && Obstacle[1][k] == j) {
+
+                        printf("%c", 223);
+
+                        indicateur = 1;
+
+                    }
+
+                }
+
+                for (int y = 0; y < OBSTACLE_DEPLACABLE; y++) {
+
+                    if (ObstDeplacable[0][y] == i && ObstDeplacable[1][y] == j) {
+
+                        printf("%c", 244);
+
+                        indicateur = 1;
+
+                    }
+
+                }
+
+                for (int w = 0; w < OBSTACLE_CASSABLE; w++) {
+
+                    if (ObstCassable[0][w] == i && ObstCassable[1][w] == j) {
+
+                        printf("%c", 184);
+
+                        indicateur = 1;
+
+                    }
+
+                }
+
+            }
+
+            if (indicateur == 0) {
+
+                printf("%c", Tab[i][j]);
+
+            }
+
+            printf("|");
+
+            indicateur = 0;
+
+        }
+
+        printf("\n");
+
+    }
+
+    printf("\n");
+
+} 
+
