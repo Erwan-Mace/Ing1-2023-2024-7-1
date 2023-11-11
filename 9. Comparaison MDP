@@ -1,0 +1,15 @@
+// Sous programme évaluant l'exactitude du mot de passe saisi
+int comparaison(char str1[], char str2[]) {
+    int value = 1; // Par défaut, le mot de passe saisi est correct
+    // Pour chaque charactère saisi
+    for (int i = 0; i < strlen(str1); i++) {
+        // Comparaison de la saisie et du mot de passe enregistré
+        if (str1[i] != str2[i]) {
+            // Si 2 caractères sont différents
+            value = 0; // Le mot de passe est faux
+            return value; // Retourne la valeur 0 pour le mot de passe faux
+        }
+    }
+    // Si chaque caractère est correct
+    return value; // Retourne la valeur du mot de passe correct (1)
+}
