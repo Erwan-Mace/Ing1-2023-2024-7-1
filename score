@@ -1,4 +1,4 @@
-int score;
+int score; // on définit la variable score
 
 score=timer*100
 
