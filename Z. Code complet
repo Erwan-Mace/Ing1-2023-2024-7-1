@@ -455,44 +455,6 @@ while(1){
 }
 */
 
-void gestionObstacles(char Tab[LIGNE][COLONNE], char tabObstacle[OBSTACLE], int tabPiege[2][PIEGE], int posJoueur[2]) {
-    /*
-     * Code ANSII pour les obstacles :
-     * 1 (bloc cassable) ♠ = 0x06
-     * 2 (bloc poussable) → = 0x1A
-     * 3 (bloc piégé) ♣ = 0x05
-     * 4 (bloc invincible) ☼ = 0x0F
-     * 5 (bloc disparition/apparition) ◙ = 0x0A
-     * 6 (bloc de tapis roulant) ▬ = 0x16
-     * 7 (balle) ☺ = 0x02
-     * 8 (Snoopy) ♂ = 0x0B
-     * 9 (oiseau) ♫ = 0x0E
-     */
-    for (int i = 0; i < OBSTACLE; i++) {
-        if (Tab[posJoueur[0]][posJoueur[1]] == tabObstacle[i]) {
-            if (tabObstacle[i] == 0x06) {
-                printf("Ce bloc à l'air fragile...\n");
-                //Animation du bloc cassable.
-            } else if (tabObstacle[i] == 0x1A) {
-                printf("Ce bloc n'a pas l'air bien lourd...\n");
-                //Animation du bloc poussable.
-            } else if (tabObstacle[i] == 0x05) {
-                printf("Game Over !\n");
-                //Retour au menu.
-            } else if (tabObstacle[i] == 0x0F) {
-                printf("Essayons un autre chemin...\n");
-                //Comme ya marqué au dessus.
-            } else if (tabObstacle[i] == 0x0A) {
-                printf("Teleportation...\n");
-                //Animation du bloc de téléportation.
-            } else if (tabObstacle[i] == 0x16) {
-                printf("Roule Snoopy, Roule !\n");
-                //Animation du bloc de tapis roulant.
-            }
-        }
-    }
-}
-
 int comparaison(char str1[], char str2[]) {
     int value = 1;
     for (int i = 0; i < strlen(str1); i++) {
