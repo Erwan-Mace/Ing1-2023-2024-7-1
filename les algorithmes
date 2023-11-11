@@ -48,3 +48,53 @@ Début
 
 Fin
 
+\\algo bloc piege\\
+
+Début
+    Déclarer Piege comme tableau bidimensionnel d'entiers
+    Initialiser TabPiege avec les coordonnées des pièges
+
+    Pour i allant de 0 à 1
+        Pour j allant de 0 à PIEGE - 1
+            Affecter TabPiege[i][j] à Piege[i][j]
+        Fin Pour
+    Fin Pour
+Fin
+
+Début
+    Déclarer PosJoueur, Obst, Piege, ObstDeplacable, ObsCassable comme tableaux
+    Déclarer touche comme caractère
+    Déclarer indicateur comme entier
+
+    indicateur <- 0
+
+    Selon la touche pressée
+        Cas 'q': // Déplacement vers la gauche
+            Si collision avec un mur ou obstacle, gérer la collision
+            Sinon, mettre à jour la position du joueur
+        Cas 'd': // Déplacement vers la droite
+            Si collision avec un mur ou obstacle, gérer la collision
+            Sinon, mettre à jour la position du joueur
+        Cas 'z': // Déplacement vers le haut
+            Si collision avec un mur ou obstacle, gérer la collision
+            Sinon, mettre à jour la position du joueur
+        Cas 's': // Déplacement vers le bas
+            Si collision avec un mur, gérer la collision
+        Cas 'c': // Action spéciale, ex: casser un obstacle
+            Gérer l'action spéciale
+    Fin Selon
+
+    Pour chaque piège dans Piege
+        Si le joueur se déplace sur un piège Alors
+            Afficher un message d'alerte
+            Mettre à jour les vies du joueur
+            Retourner 2 (indique un événement spécial)
+        Fin Si
+    Fin Pour
+
+    Si aucune collision n'est détectée Alors
+        Mettre à jour la position du joueur
+    Fin Si
+
+    Retourner 1 (indique un déplacement normal)
+Fin
