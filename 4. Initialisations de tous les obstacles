@@ -1,7 +1,12 @@
+// Sous-programme initialisant les blocs piégés
 void InitialisationObstaclePiege(int Piege[2][PIEGE]) {
+
+    // Déclaration des positions des blocs piégés dans le tableau TabPiege
     int TabPiege[2][PIEGE] = {
             {4, 4,  1, 1,  8, 8,},
             {7, 11, 4, 15, 4, 15}};
+
+    // Copie des éléments de TabPiege dans le tableau Piege
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < PIEGE; j++) {
             Piege[i][j] = TabPiege[i][j];
@@ -9,11 +14,15 @@ void InitialisationObstaclePiege(int Piege[2][PIEGE]) {
     }
 }
 
+// Sous-programme initialisant les blocs fixes
 void InitialisationObstacle(int tab[2][OBSTACLE]) {
 
+    // Déclaration des positions des blocs fixes dans le tableau TabObstacles
     int TabObstacle[2][OBSTACLE] = {
             {2, 7, 2,  7,  2, 3, 5, 6},
             {2, 2, 17, 17, 9, 9, 9, 9}};
+
+    // Copie des éléments de TabObstacles dans le tableau principal
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < OBSTACLE; j++) {
             tab[i][j] = TabObstacle[i][j];
@@ -21,11 +30,16 @@ void InitialisationObstacle(int tab[2][OBSTACLE]) {
     }
 }
 
+// Sous-programme initialisant les blocs déplacables
 void InitialisationObstacleDeplacable(int Tableau[3][OBSTACLE_DEPLACABLE]) {
+
+    // Déclaration des positions des blocs déplacables dans le tableau NewTab
     int NewTab[3][OBSTACLE_DEPLACABLE] = {
             {4, 4,  1, 1,  8, 8},
             {4, 13, 8, 14, 7, 13},
             {0, 0,  0, 0,  0, 0,}};
+
+    // Copie des éléments de NewTab dans le tableau principal
     for (int k = 0; k < 3; k++) {
         for (int z = 0; z < OBSTACLE_DEPLACABLE; z++) {
             Tableau[k][z] = NewTab[k][z];
@@ -33,10 +47,15 @@ void InitialisationObstacleDeplacable(int Tableau[3][OBSTACLE_DEPLACABLE]) {
     }
 }
 
+// Sous-programme initialisant les blocs cassables
 void InitialisationObstacleCassable(int Tab[2][OBSTACLE_CASSABLE]) {
+
+    // Déclaration des positions des blocs déplacables dans le tableau ObstCassables
     int ObstCassable[3][OBSTACLE_CASSABLE] = {
             {3, 3,  6,  6},
             {2, 16, 12, 6}};
+
+    // Copie des éléments de ObstCassables dans le tableau principal
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < OBSTACLE_CASSABLE; j++) {
             Tab[i][j] = ObstCassable[i][j];
