@@ -6,5 +6,5 @@ if (f == NombreOiseaux && timer>0){ // si tous les oiseaux ont étaient attrapé
         printf("Bravo! Vous avez attrape tous les oiseaux! Votre score est de %d",score);
     }
     else  {
-        printf("Time's up, Vous avez perdu...\n");
+        printf("Time's up, Vous avez perdu...\n"); // sinon si le joueur n'a pas attrapé tous les oiseaux et/ou le timer est inferieur à 0 alors le joueur n'a pas validé le niveau
     }
