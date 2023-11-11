@@ -1,21 +1,205 @@
-void DeplacementJoueur(int PosJoueur[2], char touche) {
-    if (touche == 'q') { // si touche q pressé alors le joueur se décale d'une colonne vers la gauche
-        PosJoueur[1] = PosJoueur[1] - 1;
+int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][OBSTACLE], int Piege[2][PIEGE],
+                      int ObstDeplacable[3][OBSTACLE_DEPLACABLE], int ObsCassable[2][OBSTACLE_CASSABLE]) {
+    int indicateur = 0;
+    if (touche == 'q') {
+        if (PosJoueur[1] == 1) {
+            printf("AIE... Snoopy s'est cogne la tete contre le mur !\n");
+            indicateur = 1;
+        } else {
+            for (int k = 0; k < OBSTACLE; k++) {
+                if (PosJoueur[0] == Obst[0][k] && PosJoueur[1] == Obst[1][k] + 1) {
+                    printf("Ceci est un obstacle...\n ");
+                    indicateur = 1;
+                }
+            }
+            for (int y = 0; y < PIEGE; y++) {
+                if (PosJoueur[0] == Piege[0][y] && PosJoueur[1] == Piege[1][y] + 1) {
+                    system("cls");
+                    printf("BOOUUMM!!!\n");
+                    sleep(2);
+                    system("cls");
+                    vies = Vie(vies);
+                    printf("Vies : %d\n", vies);
+                    sleep(2);
+                    system("cls");
+                    return 2;
+                }
+            }
+            for (int p = 0; p < OBSTACLE_DEPLACABLE; p++) {
+                if (PosJoueur[0] == ObstDeplacable[0][p] && PosJoueur[1] == ObstDeplacable[1][p] + 1 &&
+                    ObstDeplacable[2][p] == 0) {
+                    ObstDeplacable[1][p] = ObstDeplacable[1][p] - 1;
+                    PosJoueur[1] = PosJoueur[1] - 1;
+                    ObstDeplacable[2][p] = 1;
+                    indicateur = 1;
+                } else {
+                    if (PosJoueur[0] == ObstDeplacable[0][p] && PosJoueur[1] == ObstDeplacable[1][p] + 1 &&
+                        ObstDeplacable[2][p] == 1) {
+                        indicateur = 1;
+                    }
+                }
+            }
+            for(int h=0;h<OBSTACLE_CASSABLE;h++){
+                if(PosJoueur[0]==ObsCassable[0][h] && PosJoueur[1]==ObsCassable[1][h]+1){
+                    indicateur=1;
+                }
+            }
+        }
+        if (indicateur == 0) {
+            PosJoueur[1] = PosJoueur[1] - 1;
+        }
+    } else if (touche == 'd') {
+        if (PosJoueur[1] == 18) {
+            printf("Snoopy s'est cogne la tete contre le mur ! Faites plus attention...\n");
+            indicateur = 1;
+        } else {
+            for (int k = 0; k < OBSTACLE; k++) {
+                if (PosJoueur[0] == Obst[0][k] && PosJoueur[1] == Obst[1][k] - 1) {
+                    printf("Ceci est un obstacle\n");
+                    indicateur = 1;
+                }
+            }
+            for (int y = 0; y < PIEGE; y++) {
+                if (PosJoueur[0] == Piege[0][y] && PosJoueur[1] == Piege[1][y] - 1) {
+                    system("cls");
+                    printf("BOOUUMM!!!\n");
+                    sleep(2);
+                    system("cls");
+                    vies = Vie(vies);
+                    printf("Vies : %d\n", vies);
+                    sleep(2);
+                    system("cls");
+                    return 2;
+                }
+            }
+            for (int p = 0; p < OBSTACLE_DEPLACABLE; p++) {
+                if (PosJoueur[0] == ObstDeplacable[0][p] && PosJoueur[1] == ObstDeplacable[1][p] - 1 &&
+                    ObstDeplacable[2][p] == 0) {
+                    ObstDeplacable[1][p] = ObstDeplacable[1][p] + 1;
+                    PosJoueur[1] = PosJoueur[1] + 1;
+                    ObstDeplacable[2][p] = 1;
+                    indicateur = 1;
+                } else {
+                    if (PosJoueur[0] == ObstDeplacable[0][p] && PosJoueur[1] == ObstDeplacable[1][p] - 1 &&
+                        ObstDeplacable[2][p] == 1) {
+                        indicateur = 1;
+                    }
+                }
+            }
+            for(int h=0;h<OBSTACLE_CASSABLE;h++){
+                if(PosJoueur[0]==ObsCassable[0][h] && PosJoueur[1]==ObsCassable[1][h]-1){
+                    indicateur=1;
+                }
+            }
+        }
+        if (indicateur == 0) {
+            PosJoueur[1] = PosJoueur[1] + 1;
+        }
+    } else if (touche == 'z') {
+        if (PosJoueur[0] == 1) {
+            printf("Snoopy s'est cogne la tete contre le mur ! Faites plus attention...\n");
+            indicateur = 1;
+        } else {
+            for (int k = 0; k < OBSTACLE; k++) {
+                if (PosJoueur[0] == Obst[0][k] + 1 && PosJoueur[1] == Obst[1][k]) {
+                    printf("Ceci est un obstacle\n");
+                    indicateur = 1;
+                }
+            }
+            for (int y = 0; y < PIEGE; y++) {
+                if (PosJoueur[0] == Piege[0][y] + 1 && PosJoueur[1] == Piege[1][y]) {
+                    system("cls");
+                    printf("BOOUUMM!!!\n");
+                    sleep(2);
+                    system("cls");
+                    vies = Vie(vies);
+                    printf("Vies : %d\n", vies);
+                    sleep(2);
+                    system("cls");
+                    return 2;
+                }
+            }
+            for (int p = 0; p < OBSTACLE_DEPLACABLE; p++) {
+                if (PosJoueur[1] == ObstDeplacable[1][p] && PosJoueur[0] == ObstDeplacable[0][p] + 1 &&
+                    ObstDeplacable[2][p] == 0) {
+                    ObstDeplacable[0][p] = ObstDeplacable[0][p] - 1;
+                    PosJoueur[0] = PosJoueur[0] - 1;
+                    ObstDeplacable[2][p] = 1;
+                    indicateur = 1;
+                } else {
+                    if (PosJoueur[1] == ObstDeplacable[1][p] && PosJoueur[0] == ObstDeplacable[0][p] + 1 &&
+                        ObstDeplacable[2][p] == 1) {
+                        indicateur = 1;
+                    }
+                }
+            }
+            for(int h=0;h<OBSTACLE_CASSABLE;h++){
+                if(PosJoueur[1]==ObsCassable[1][h] && PosJoueur[0]==ObsCassable[0][h]+1){
+                    indicateur=1;
+                }
+            }
+        }
+        if (indicateur == 0) {
+            PosJoueur[0] = PosJoueur[0] - 1;
+        }
+    } else if (touche == 's') {
+        if (PosJoueur[0] == 8) {
+            printf("Snoopy s'est cogne la tete contre le mur ! Faites plus attention...\n");
+            indicateur = 1;
+        }
+    } else if (touche == 'c') {
+        for (int w = 0; w < OBSTACLE_CASSABLE; w++) {
+            if (PosJoueur[0] == ObsCassable[0][w] && PosJoueur[1] == ObsCassable[1][w] - 1 ||
+                PosJoueur[0] == ObsCassable[0][w] && PosJoueur[1] == ObsCassable[1][w] + 1 ||
+                PosJoueur[1] == ObsCassable[1][w] && PosJoueur[0] == ObsCassable[0][w] - 1 ||
+                PosJoueur[1] == ObsCassable[1][w] && PosJoueur[0] == ObsCassable[0][w] + 1) {
+                ObsCassable[0][w] = 12;
+                ObsCassable[1][w] = 0;
+            }
+        }
+    } else {
+        for (int k = 0; k < OBSTACLE; k++) {
+            if (PosJoueur[0] == Obst[0][k] - 1 && PosJoueur[1] == Obst[1][k]) {
+                printf("Ceci est un obstacle\n");
+                    indicateur = 1;
+                }
+            }
+            for (int y = 0; y < PIEGE; y++) {
+                if (PosJoueur[0] == Piege[0][y] - 1 && PosJoueur[1] == Piege[1][y]) {
+                    system("cls");
+                    printf("BOOUUMM!!!\n");
+                    sleep(2);
+                    system("cls");
+                    vies = Vie(vies);
+                    printf("Vies : %d\n", vies);
+                    sleep(2);
+                    system("cls");
+                    return 2;
+                }
+            }
+        for (int p = 0; p < OBSTACLE_DEPLACABLE; p++) {
+            if (PosJoueur[1] == ObstDeplacable[1][p] && PosJoueur[0] == ObstDeplacable[0][p] - 1 &&
+                ObstDeplacable[2][p] == 0) {
+                ObstDeplacable[0][p] = ObstDeplacable[0][p] + 1;
+                PosJoueur[0] = PosJoueur[0] + 1;
+                ObstDeplacable[2][p] = 1;
+                indicateur = 1;
+            } else {
+                if (PosJoueur[1] == ObstDeplacable[1][p] && PosJoueur[0] == ObstDeplacable[0][p] - 1 &&
+                    ObstDeplacable[2][p] == 1) {
+                    indicateur = 1;
+                }
+            }
+        }
+        for(int h=0;h<OBSTACLE_CASSABLE;h++){
+            if(PosJoueur[1]==ObsCassable[1][h] && PosJoueur[0]==ObsCassable[0][h]-1){
+                indicateur=1;
+            }
+        }
+        if (indicateur == 0) {
+            PosJoueur[0] = PosJoueur[0] + 1;
+        }
     }
-    else if (touche == 'd') { // si touche d pressé alors le joueur se décale d'une colonne vers la droite
-        PosJoueur[1] = PosJoueur[1] + 1;
+    indicateur = 0;
+    return 1;
     }
-    else if (touche == 'z') { // si touche z pressé alors le joueur se décale d'une ligne vers le haut
-        PosJoueur[0] = PosJoueur[0] - 1;
-    }
-    else if (touche == 's') { // si touche s pressé alors le joueur se décale d'une ligne vers le bas
-        PosJoueur[0] = PosJoueur[0] + 1;
-    }
-}
-
-Dans le main on a:
-char NvTableau[ligne][colonne]; // on definit un tableau a 2 dimensions ou ligne et colonne sont definis grace a #define ligne et #define colonne
-char pos=' ';
-int PositionJoueur[2] = {5, 10}; // on définit la position initiale du joueur
-pos=getch(); // permet de lire les touches saisies au clavier (ATTENTION il faut ajouter une bibliotheque specifique conio.h)
-DeplacementJoueur(PositionJoueur, pos); // on appelle le sous programme DeplacementJoueur
