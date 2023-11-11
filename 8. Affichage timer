@@ -1,3 +1,4 @@
+// Sous-programme affichant le timer
 void AfficheTimer(int timer) {
     printf("Temps restant : %d secondes\n", timer);
 }
