@@ -1,0 +1,4 @@
+int Vie(int nb_vies) {
+    nb_vies = nb_vies - 1;
+    return nb_vies;
+}
