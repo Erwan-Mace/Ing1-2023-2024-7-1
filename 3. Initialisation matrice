@@ -1,5 +1,8 @@
-void InitialisationMatrice(char Tableau[ligne][colonne]) {
-    char NvTableau[ligne][colonne] = {
+// Sous-programme initialisant la matrice (plateau de jeu)
+void InitialisationMatrice(char Tableau[LIGNE][COLONNE]) {
+
+    // Déclaration d'un nouveau tableau
+    char NvTableau[LIGNE][COLONNE] = {
             {'*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
             {'*', 'O', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'O', '*'},
             {'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
@@ -11,8 +14,10 @@ void InitialisationMatrice(char Tableau[ligne][colonne]) {
             {'*', 'O', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'O', '*'},
             {'*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
     };
-    for (int i = 0; i < ligne; i++) {
-        for (int j = 0; j < colonne; j++) {
+
+    // Intégration des éléments du nouveau tableau dans le tableau principal
+    for (int i = 0; i < LIGNE; i++) {
+        for (int j = 0; j < COLONNE; j++) {
             Tableau[i][j] = NvTableau[i][j];
         }
     }
