@@ -17,36 +17,33 @@ Fin
 
 \\algo mot de passe\\
 
-Début
-    Déclarer MDP, Motdepasse1, Motdepasse2, Motdepasse3, Motdepasse4 comme chaînes de caractères
-    Déclarer value comme entier
+DEBUT
+    ENTIER value <- 0
+    TABLEAU DE CARACTERES MDP, Motdepasse1, Motdepasse2, Motdepasse3, Motdepasse4
 
-    value <- 0  // Initialiser la valeur à zéro
-
-    Si comparaison(MDP, Motdepasse1) est vrai Alors
+    SI comparaison(MDP, Motdepasse1) = 1 ALORS
         value <- 1
-        Retourner value
-    Fin Si
+        RETOURNER value
+    FIN SI
 
-    Si comparaison(MDP, Motdepasse2) est vrai Alors
+    SI comparaison(MDP, Motdepasse2) = 1 ALORS
         value <- 2
-        Retourner value
-    Fin Si
+        RETOURNER value
+    FIN SI
 
-    Si comparaison(MDP, Motdepasse3) est vrai Alors
+    SI comparaison(MDP, Motdepasse3) = 1 ALORS
         value <- 3
-        Retourner value
-    Fin Si
+        RETOURNER value
+    FIN SI
 
-    Si comparaison(MDP, Motdepasse4) est vrai Alors
+    SI comparaison(MDP, Motdepasse4) = 1 ALORS
         value <- 4
-        Retourner value
-    Fin Si
+        RETOURNER value
+    SINON
+        RETOURNER 5  // Correspond à aucun mot de passe, retour au menu
+    FIN SI
+FIN
 
-    Sinon
-        Retourner 5  // Commande le retour au menu
-
-Fin
 
 \\algo bloc piege\\
 
