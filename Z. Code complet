@@ -533,7 +533,7 @@ int jeu(int niveau) {
             pos = getch();
             system("cls");
             if (DeplacementJoueur(PositionJoueur, pos, Obstacle, Piege, ObstDeplacable,ObstCassable) == 2) {
-                timer = 120;
+                timer = 123;
                 PositionJoueur[0] = 4;
                 PositionJoueur[1] = 9;
                 if (checkingVie() == 'a') {
