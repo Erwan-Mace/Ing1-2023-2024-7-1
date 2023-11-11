@@ -1,45 +1,6 @@
 \\algo score\\
 
-Début
-    Déclarer solde, nombre, montant comme entiers
-    Déclarer description comme caractère
 
-    solde <- 0  // Initialiser le solde à zéro
-
-    Répéter
-        Afficher "1- Saisissez un prix, 2- Saisissez un revenu, 3- Affiche le solde, 4- Exit"
-        Afficher "Veuillez choisir entre le choix 1, 2, 3, 4 : "
-        Lire nombre
-
-        Selon nombre faire
-            Cas 1:
-                Afficher "Insérer le montant de la dépense : "
-                Lire montant
-                solde <- solde - montant
-                Afficher "Saisissez une description pour la dépense : "
-                Lire description
-
-            Cas 2:
-                Afficher "Insérer le montant du revenu : "
-                Lire montant
-                solde <- solde + montant
-                Afficher "Saisissez une description pour le revenu : "
-                Lire description
-
-            Cas 3:
-                Afficher "Votre solde est de : ", solde
-
-            Cas 4:
-                // Ce cas permet de sortir de la boucle et de terminer le programme
-
-            Autre Cas:
-                Afficher "Entrer une valeur entre 1 et 4"
-
-        Fin Si
-
-    Jusqu'à ce que nombre soit égal à 4
-
-Fin
 
 \\algo mot de passe\\
 
