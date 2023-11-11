@@ -1,9 +1,10 @@
+// Sous-programme affichant le menu du jeu
 int menu() {
-    int valmenu;
+    int valmenu; // Valeur saisie par le joueur pour choisir une option du menu
     printf("****************************************************************\n");
     printf("                       SNOOPY MAGIC SHOW                                      \n");
     printf("****************************************************************\n");
     printf("\n 1 - Commencer une nouvelle partie\n 2 - Continuer\n 3 - Utiliser un mot de passe\n 4 - Regles du jeu\n 5 - Scores\n 6 - Quitter\n");
-    scanf("%d", &valmenu);
-    return valmenu;
+    scanf("%d", &valmenu); // Sasie du choix d'une option du menu
+    return valmenu; // Retourne le numéro du chois saisi
 }
