@@ -165,9 +165,6 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][OBSTACLE], int 
             for (int y = 0; y < PIEGE; y++) {
                 if (PosJoueur[0] == Piege[0][y] && PosJoueur[1] == Piege[1][y] + 1) {
                     system("cls");
-                    printf("BOOUUMM!!!\n");
-                    sleep(2);
-                    system("cls");
                     vies = Vie(vies);
                     printf("Vies : %d\n", vies);
                     sleep(2);
@@ -212,9 +209,6 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][OBSTACLE], int 
             for (int y = 0; y < PIEGE; y++) {
                 if (PosJoueur[0] == Piege[0][y] && PosJoueur[1] == Piege[1][y] - 1) {
                     system("cls");
-                    printf("BOOUUMM!!!\n");
-                    sleep(2);
-                    system("cls");
                     vies = Vie(vies);
                     printf("Vies : %d\n", vies);
                     sleep(2);
@@ -258,9 +252,6 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][OBSTACLE], int 
             }
             for (int y = 0; y < PIEGE; y++) {
                 if (PosJoueur[0] == Piege[0][y] + 1 && PosJoueur[1] == Piege[1][y]) {
-                    system("cls");
-                    printf("BOOUUMM!!!\n");
-                    sleep(2);
                     system("cls");
                     vies = Vie(vies);
                     printf("Vies : %d\n", vies);
@@ -311,22 +302,19 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][OBSTACLE], int 
         for (int k = 0; k < OBSTACLE; k++) {
             if (PosJoueur[0] == Obst[0][k] - 1 && PosJoueur[1] == Obst[1][k]) {
                 printf("Ceci est un obstacle\n");
-                    indicateur = 1;
-                }
+                indicateur = 1;
             }
-            for (int y = 0; y < PIEGE; y++) {
-                if (PosJoueur[0] == Piege[0][y] - 1 && PosJoueur[1] == Piege[1][y]) {
-                    system("cls");
-                    printf("BOOUUMM!!!\n");
-                    sleep(2);
-                    system("cls");
-                    vies = Vie(vies);
-                    printf("Vies : %d\n", vies);
-                    sleep(2);
-                    system("cls");
-                    return 2;
-                }
+        }
+        for (int y = 0; y < PIEGE; y++) {
+            if (PosJoueur[0] == Piege[0][y] - 1 && PosJoueur[1] == Piege[1][y]) {
+                system("cls");
+                vies = Vie(vies);
+                printf("Vies : %d\n", vies);
+                sleep(2);
+                system("cls");
+                return 2;
             }
+        }
         for (int p = 0; p < OBSTACLE_DEPLACABLE; p++) {
             if (PosJoueur[1] == ObstDeplacable[1][p] && PosJoueur[0] == ObstDeplacable[0][p] - 1 &&
                 ObstDeplacable[2][p] == 0) {
@@ -352,7 +340,7 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][OBSTACLE], int 
     }
     indicateur = 0;
     return 1;
-    }
+}
 
 
 void AfficheTimer(int timer) {
