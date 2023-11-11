@@ -41,5 +41,36 @@ Début
 
 Fin
 
-\\algo\\
+\\algo mot de passe\\
+
+Début
+    Déclarer MDP, Motdepasse1, Motdepasse2, Motdepasse3, Motdepasse4 comme chaînes de caractères
+    Déclarer value comme entier
+
+    value <- 0  // Initialiser la valeur à zéro
+
+    Si comparaison(MDP, Motdepasse1) est vrai Alors
+        value <- 1
+        Retourner value
+    Fin Si
+
+    Si comparaison(MDP, Motdepasse2) est vrai Alors
+        value <- 2
+        Retourner value
+    Fin Si
+
+    Si comparaison(MDP, Motdepasse3) est vrai Alors
+        value <- 3
+        Retourner value
+    Fin Si
+
+    Si comparaison(MDP, Motdepasse4) est vrai Alors
+        value <- 4
+        Retourner value
+    Fin Si
+
+    Sinon
+        Retourner 5  // Commande le retour au menu
+
+Fin
 
