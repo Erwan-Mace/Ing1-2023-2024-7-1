@@ -1,6 +1,19 @@
 \\algo score\\
+Début
+    Déclarer score comme entier
+    Déclarer timer comme entier
+    Déclarer f comme entier
+    Déclarer NombreOiseaux comme entier
 
+    score <- timer * 100  // Calcul du score
 
+    Si f est égal à NombreOiseaux et timer est supérieur à 0 Alors
+        Afficher "Bravo! Vous avez attrapé tous les oiseaux! Votre score est de ", score
+    Sinon
+        Afficher "Time's up, Vous avez perdu..."
+    Fin Si
+
+Fin
 
 \\algo mot de passe\\
 
