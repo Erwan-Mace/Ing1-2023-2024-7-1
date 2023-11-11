@@ -2,7 +2,7 @@ int score; // on définit la variable score
 
 score=timer*100
 
-if (f == NombreOiseaux && timer>0){
+if (f == NombreOiseaux && timer>0){ // si tous les oiseaux ont étaient attrapés et que le timer est superieur à 0 alors le joueur a réussi le niveau
         printf("Bravo! Vous avez attrape tous les oiseaux! Votre score est de %d",score);
     }
     else  {
