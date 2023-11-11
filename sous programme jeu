@@ -1,1 +1,85 @@
+int jeu(int niveau) {
+    int f = 0;
+    int Obstacle[2][OBSTACLE];
+    char Tableau[LIGNE][COLONNE];
+    int Piege[2][PIEGE];
+    int ObstDeplacable[3][OBSTACLE_DEPLACABLE];
+    int ObstCassable[2][OBSTACLE_CASSABLE];
+    char pos;
+    char oiseaux = 'O';
+    int NombreOiseaux = 4;
+    int PositionJoueur[2] = {4, 9};
+    int positionBalle[2] = {3, 7};
 
+    clock_t start = clock();
+    int timer = 120; // 120 secondes pour le timer
+    InitialisationMatrice(Tableau);
+    InitialisationObstacle(Obstacle);
+    InitialisationObstaclePiege(Piege);
+    InitialisationObstacleDeplacable(ObstDeplacable);
+    InitialisationObstacleCassable(ObstCassable);
+
+    Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable,ObstCassable);
+    AfficheTimer(timer);
+
+    while (f != NombreOiseaux && timer > 0) {
+        if (kbhit()) {
+            //deplacementBalle(positionBalle,Tableau);
+            pos = getch();
+            system("cls");
+            if (DeplacementJoueur(PositionJoueur, pos, Obstacle, Piege, ObstDeplacable,ObstCassable) == 2) {
+                timer = 120;
+                PositionJoueur[0] = 4;
+                PositionJoueur[1] = 9;
+                if (checkingVie() == 'a') {
+                    system("cls");
+                    printf("Vous n'avez plus de vies...!\n");
+                    sleep(2);
+                    system("cls");
+                    printf("GAME OVER\n");
+                    sleep(2);
+                    system("cls");
+                    return 2;
+                }
+            }
+            Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable,ObstCassable);
+            // Mise à jour et affichage du timer
+            clock_t end = clock();
+            double elapsed = (double) (end - start) / CLOCKS_PER_SEC;
+            if (elapsed >= 1.0) {
+                timer -= (int) elapsed;
+                start = clock(); // Réinitialisation du début pour le prochain tick
+            }
+            AfficheTimer(timer);
+            if (Tableau[PositionJoueur[0]][PositionJoueur[1]] == 'O') {
+                f++;
+                Tableau[PositionJoueur[0]][PositionJoueur[1]] = ' ';
+                printf("\nVous avez attrape un oiseau! Il vous en reste %d a attraper.\n", NombreOiseaux - f);
+            }
+        }
+        // si le timer écoulé
+        if (timer == 0) {
+            Vie(vies);
+            if (Vie(vies) > 0) {
+                printf("\nLe temps est ecoule ! Vous avez perdu.\nIl ne vous reste plus que %d vies.\n",
+                       Vie(vies));
+                sleep(2);
+            } else {
+                printf("\nVous n'avez plus de vie !\nAttendez avant de retenter votre chance.\n");
+                sleep(2);
+            }
+            break;
+        }
+    }
+    if (f == NombreOiseaux) {
+        printf("Bravo! Vous avez attrape tous les oiseaux!...\n");
+        sleep(2);
+        printf("Votre score est de...\n");
+        sleep(2);
+        printf("%d !\n", timer * 100);
+        sleep(2);
+        printf("Merci d'avoir joue !\n");
+        sleep(2);
+    }
+    return 1;
+}
