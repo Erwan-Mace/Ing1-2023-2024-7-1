@@ -1,0 +1,3 @@
+void AfficheTimer(int timer) {
+    printf("Temps restant : %d secondes\n", timer);
+}
