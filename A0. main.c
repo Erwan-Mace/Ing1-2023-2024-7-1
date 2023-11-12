@@ -129,23 +129,33 @@ int main() {
 
     // Si l'option 4 du menu est choisie : afficher les règles du jeu
     else if (valmenu == 4) {
-        system("cls"); // Nettoyage de la console
-
-        // Affichage des règles du jeu
-        printf("Dans l'arene, quatre oiseaux, representes par le symbole 'O', sont places aux quatre coins. Le joueur, incarne par le caractere 'P', doit les collecter tous.\n");
-        printf("Cependant, des precautions doivent etre prises pour eviter les blocs tueurs symbolises par %c. Ces derniers sont mortels au contact.\n",
-               177);
-        printf("L'arene comprend egalement des blocs immobiles, egalement representes par %c, qui servent d obstacles.\n",
-               223);
-        printf("Une balle, designee par %c, rebondit à l interieur de l arene et peut eliminer le joueur si elle n est pas esquivee avec succes.\n",
-               0x02);
-        printf("Enfin, des blocs poussables, marques par %c, peuvent etre deplaces par le joueur. Ces blocs sont inoffensifs et ne causent aucun degat lorsqu ils sont pousses.\n",
-               64);
-        printf("Le but du jeu est de recuperer tous les oiseaux sans subir de degats des blocs tueurs ou de la balle rebondissante, tout en se servant judicieusement des blocs poussables pour faciliter la tache.\n");
-        printf("tout ceci dans les 120 secondes impartie.\n");
-        sleep(20); // Délai de 20 secondes
-        system("cls"); // Nettoyage de la console
-        main(); // Retour au menu
+       system("cls");
+        printf("Voici les regles du jeu :                                                                 Appuyer sur x pour quitter\n\n"
+               "Votre but est de sauver les 4 oiseaux qui sont representes par des %c repartis aux 4 coins de la matrice de 10x20.\n"
+               "Meme matrice qui comprend des blocs qui ont pour objectif de ralentir la progression de Snoopy : \n\n"
+               "Les blocs cassables : %c \n- Lorsque Snoopy se trouve sur une case adjacente a l'un de ces blocs, il peut les casser en appuyant sur 'c'.\n\n"
+               "Les blocs deplacable : %c \n- Lorsque Snoopy se trouve sur une case adjacente a l'un de ces blocs, il peut les deplacer en appuyant sur la touche directionnelle (zqsd) qui va dans la direction du bloc.\n\n"
+               "Les blocs pieges : %c \n- Lorsque Snoopy se trouve sur un bloc piege, il perd une vie et recommence le niveau.\n\n"
+               "Les blocs de teleportation : %c \n- Il n'y a rien ici pour l'instant...\n\n"
+               "Les blocs tapis-roulant : %c \n- Il n'y a rien ici pour l'instant...\n\n"
+               "Les blocs invincibles : * \n- Ils sont en bordures de la matrice et Snoopy ne peut pas les traverser.\n\n"
+               "Les obstacles : %c \n- Ils sont innofensifs pour Snoopy, mais il ne peut pas les traverser.\n\n"
+               "Vous disposez de 120 secondes pour terminer le niveau en cours. Une fois ce temps depasse, vous perdez une vie et recommencez le niveau.\n"
+               "Snoopy dispose de 3 vies pour chaque niveau.\n"
+               "Il est possible de sauvegarder sa progression a tout moment en appuyant sur 'x'.\n"
+               "L'utilisation de mot de passe est egalement possible pour acceder aux niveaux superieur en n'ayant pas a rejouer les premiers niveaux, vous obtenez ces mots de passes en finissant les niveaux.\n"
+               "Qui sait, peut-etre qu'il y a meme un niveau cache...\n"
+               "Amusez vous bien !.\n",'A','B','C','D','E','F','G');
+        while(1){
+            if(kbhit()){
+                sortirRegles = getch();
+                if(sortirRegles == 'x'){
+                    break;
+                }
+            }
+        }
+        system("cls");
+        main(); //Retour au menu.
     }
 
     // Si l'option 5 du menu est choisie : afficher les scores
