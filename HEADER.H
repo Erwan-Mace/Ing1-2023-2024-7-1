@@ -12,7 +12,7 @@
 
 int Vie(int nb_vies);
 
-int checkingVie();
+int checkingVie(int vies);
 
 void pause(int isPaused, int timer);
 
