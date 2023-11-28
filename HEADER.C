@@ -693,7 +693,7 @@ int jeu(int niveau) {
     char oiseaux = 'O';
     int NombreOiseaux = 4;
     int PositionJoueur[2] = {4, 9};
-    int positionBalle[2] = {3, 7};
+    //int positionBalle[2] = {3, 7};
     int Paused = 0;
     clock_t pauseStart = 0;
     // Départ du timer
@@ -753,7 +753,6 @@ int jeu(int niveau) {
                     pauseStart = clock();
                 }
                 system("cls");
-
                 // Affichage de la matrice complète avec les blocs et Snoopy
                 Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable, ObstCassable);
                 // Mise à jour et affichage du timer
@@ -766,7 +765,16 @@ int jeu(int niveau) {
                     // Le symbole de l'oiseau est remplacé par une case vide
                     Tableau[PositionJoueur[0]][PositionJoueur[1]] = ' ';
                     // Affichage du nombre d'oiseaux qu'il reste à attraper
-                    printf("\nVous avez attrape un oiseau! Il vous en reste %d a attraper.\n", NombreOiseaux - f);
+                    NombreOiseaux--;
+                    printf("\nVous avez attrape un oiseau! Il vous en reste %d a attraper.\n", NombreOiseaux);
+                }
+                //Sauvegarde
+                if(pos == 'x'){
+                    system("cls");
+                    sauvegarde(Tableau,ObstDeplacable,Piege,ObstCassable,PositionJoueur,NombreOiseaux);
+                    sleep(1);
+                    system("cls");
+                    return 2;
                 }
             }
             // Si le timer est écoulé
@@ -800,14 +808,6 @@ int jeu(int niveau) {
                 system("cls");
                 Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable, ObstCassable);
                 AfficheTimer(timer);
-            }
-            //Sauvegarde
-            if(pos == 'x'){
-                system("cls");
-                sauvegarde(Tableau,ObstDeplacable,Piege,ObstCassable,PositionJoueur,NombreOiseaux);
-                sleep(1);
-                system("cls");
-                return 2;
             }
         }
         // Si tous les oiseaux ont été attrapés
@@ -883,25 +883,25 @@ void sauvegarde(char Tab[LIGNE][COLONNE],int TabObstaclesDep[3][OBSTACLE_DEPLACA
     fprintf(sauvegarde,"%s","\n------------------------------------------------\n");
     fprintf(sauvegarde,"%s","Coordonnees des oiseaux sur la matrice : ");
     fprintf(sauvegarde,"%s","\n------------------------------------------------\n");
-    if(Tab[1][18] == '0'){
+    if(Tab[1][18] == 'O'){
         fprintf(sauvegarde,"%d",1);
         fprintf(sauvegarde,"%c",' ');
         fprintf(sauvegarde,"%d",18);
         fprintf(sauvegarde,"%s"," | ");
     }
-    if(Tab[1][1] == '0'){
+    if(Tab[1][1] == 'O'){
         fprintf(sauvegarde,"%d",1);
         fprintf(sauvegarde,"%c",' ');
         fprintf(sauvegarde,"%d",1);
         fprintf(sauvegarde,"%s"," | ");
     }
-    if(Tab[8][1] == '0'){
+    if(Tab[8][1] == 'O'){
         fprintf(sauvegarde,"%d",8);
         fprintf(sauvegarde,"%c",' ');
         fprintf(sauvegarde,"%d",1);
         fprintf(sauvegarde,"%s"," | ");
     }
-    if(Tab[8][18] == '0'){
+    if(Tab[8][18] == 'O'){
         fprintf(sauvegarde,"%d",8);
         fprintf(sauvegarde,"%c",' ');
         fprintf(sauvegarde,"%d",18);
