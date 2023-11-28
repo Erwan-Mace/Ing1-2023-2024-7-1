@@ -46,4 +46,6 @@ void gestionChoixNiveau(int niveau);
 
 int jeu(int niveau);
 
+void sauvegarde(char Tab[LIGNE][COLONNE],int TabObstaclesDep[3][OBSTACLE_DEPLACABLE], int TabObstPige[2][PIEGE], int TabObstCassable[2][OBSTACLE_CASSABLE],int PosJoueur[2], int nombreOiseaux);
+
 #endif //PROJET_SNOOPY_HEADER_H
