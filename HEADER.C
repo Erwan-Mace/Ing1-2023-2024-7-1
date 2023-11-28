@@ -1,3 +1,6 @@
+//
+// Created by dia2l on 28-11-23.
+//
 
 #include "header.h"
 #include <stdio.h>
@@ -798,6 +801,14 @@ int jeu(int niveau) {
                 Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable, ObstCassable);
                 AfficheTimer(timer);
             }
+            //Sauvegarde
+            if(pos == 'x'){
+                system("cls");
+                sauvegarde(Tableau,ObstDeplacable,Piege,ObstCassable,PositionJoueur,NombreOiseaux);
+                sleep(1);
+                system("cls");
+                return 2;
+            }
         }
         // Si tous les oiseaux ont été attrapés
         if (f == NombreOiseaux) {
@@ -814,4 +825,87 @@ int jeu(int niveau) {
     }
     return 1; // Commande le retour au menu
 }
-
+//POUR LINSTANT CA NE FONCTIONNE PAS
+void sauvegarde(char Tab[LIGNE][COLONNE],int TabObstaclesDep[3][OBSTACLE_DEPLACABLE], int TabObstPige[2][PIEGE], int TabObstCassable[2][OBSTACLE_CASSABLE],int PosJoueur[2], int nombreOiseaux){ //Penser à rajouter la position de la balle quand le mouvement de la balle sera fait.
+    printf("Vous avez choisi de sauvegarder la partie en cours...\n"
+           "Veuillez entrer le nom du fichier de sauvegarde : \n");
+    char nomSauvegarde[1000];
+    scanf("%s",nomSauvegarde);
+    FILE *sauvegarde;
+    sauvegarde = fopen(nomSauvegarde,"w");
+    fprintf(sauvegarde,"%s","Tableau des obstacles cassables : ");
+    fprintf(sauvegarde,"%s","\n------------------------------------------------\n");
+    for(int i = 0; i<2;i++){
+        for(int y = 0;y<OBSTACLE_CASSABLE;y++){
+            fprintf(sauvegarde,"%c",'[');
+            fprintf(sauvegarde,"%d",TabObstCassable[i][y]);
+            fprintf(sauvegarde,"%c",']');
+            fprintf(sauvegarde,"%s"," | ");
+        }
+        fprintf(sauvegarde,"\n");
+    }
+    fprintf(sauvegarde,"%s","------------------------------------------------\n");
+    fprintf(sauvegarde,"%s","Tableau des obstacles deplacables : ");
+    fprintf(sauvegarde,"%s","\n------------------------------------------------\n");
+    for(int i = 0; i<2;i++){
+        for(int y = 0;y<OBSTACLE_DEPLACABLE;y++){
+            fprintf(sauvegarde,"%c",'[');
+            fprintf(sauvegarde,"%d",TabObstaclesDep[i][y]);
+            fprintf(sauvegarde,"%c",']');
+            fprintf(sauvegarde,"%s"," | ");
+        }
+        fprintf(sauvegarde,"\n");
+    }
+    fprintf(sauvegarde,"%s","------------------------------------------------\n");
+    fprintf(sauvegarde,"%s","Tableau des pieges : ");
+    fprintf(sauvegarde,"%s","\n------------------------------------------------\n");
+    for(int i = 0; i<2;i++){
+        for(int y = 0;y<PIEGE;y++){
+            fprintf(sauvegarde,"%c",'[');
+            fprintf(sauvegarde,"%d",TabObstPige[i][y]);
+            fprintf(sauvegarde,"%c",']');
+            fprintf(sauvegarde,"%s"," | ");
+        }
+        fprintf(sauvegarde,"\n");
+    }
+    fprintf(sauvegarde,"%s","------------------------------------------------\n");
+    fprintf(sauvegarde,"%s","Position du joueur : ");
+    fprintf(sauvegarde,"%s","\n------------------------------------------------\n");
+    for(int i = 0;i<2;i++){
+        fprintf(sauvegarde,"%c",'[');
+        fprintf(sauvegarde,"%d",PosJoueur[i]);
+        fprintf(sauvegarde,"%c",']');
+        fprintf(sauvegarde,"%s"," | ");
+    }
+    fprintf(sauvegarde,"%s","\n------------------------------------------------\n");
+    fprintf(sauvegarde,"%s", "Oiseaux = ");
+    fprintf(sauvegarde,"%d",nombreOiseaux);
+    fprintf(sauvegarde,"%s","\n------------------------------------------------\n");
+    fprintf(sauvegarde,"%s","Coordonnees des oiseaux sur la matrice : ");
+    fprintf(sauvegarde,"%s","\n------------------------------------------------\n");
+    if(Tab[1][18] == '0'){
+        fprintf(sauvegarde,"%d",1);
+        fprintf(sauvegarde,"%c",' ');
+        fprintf(sauvegarde,"%d",18);
+        fprintf(sauvegarde,"%s"," | ");
+    }
+    if(Tab[1][1] == '0'){
+        fprintf(sauvegarde,"%d",1);
+        fprintf(sauvegarde,"%c",' ');
+        fprintf(sauvegarde,"%d",1);
+        fprintf(sauvegarde,"%s"," | ");
+    }
+    if(Tab[8][1] == '0'){
+        fprintf(sauvegarde,"%d",8);
+        fprintf(sauvegarde,"%c",' ');
+        fprintf(sauvegarde,"%d",1);
+        fprintf(sauvegarde,"%s"," | ");
+    }
+    if(Tab[8][18] == '0'){
+        fprintf(sauvegarde,"%d",8);
+        fprintf(sauvegarde,"%c",' ');
+        fprintf(sauvegarde,"%d",18);
+        fprintf(sauvegarde,"%s"," | ");
+    }
+    fprintf(sauvegarde,"%s","\n------------------------------------------------\n");
+}
