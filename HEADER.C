@@ -510,6 +510,16 @@ int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][OBSTACLE], int 
             }
         }
     }
+    if (PosJoueur[0] == Teleporteur1Depart[0] && PosJoueur[1] == Teleporteur1Depart[1]) {
+        PosJoueur[0] = Teleporteur1Arrivee[0];
+        PosJoueur[1] = Teleporteur1Arrivee[1];
+    } else if (PosJoueur[0] == Teleporteur2Depart[0] && PosJoueur[1] == Teleporteur2Depart[1]) {
+        PosJoueur[0] = Teleporteur2Arrivee[0];
+        PosJoueur[1] = Teleporteur2Arrivee[1];
+    } else if (PosJoueur[0] == Teleporteur3Depart[0] && PosJoueur[1] == Teleporteur3Depart[1]) {
+        PosJoueur[0] = Teleporteur3Arrivee[0];
+        PosJoueur[1] = Teleporteur3Arrivee[1];
+    }
     indicateur = 0; // L'indicateur prend la valeur 0
     return 1; // Retourne la valeur 1
 }
