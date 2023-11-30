@@ -158,14 +158,19 @@ void InitialisationObstacleCassable(int Tab[2][OBSTACLE_CASSABLE]) {
 
 // Sous-programme gérant l'affichage de la matrice avec les différents blocs
 void Affichage(char Tab[LIGNE][COLONNE], int PosJoueur[2], int Obstacle[2][OBSTACLE], int Piege[2][PIEGE],
-               int ObstDeplacable[3][OBSTACLE_DEPLACABLE], int ObstCassable[2][OBSTACLE_CASSABLE]) {
+               int ObstDeplacable[3][OBSTACLE_DEPLACABLE], int ObstCassable[2][OBSTACLE_CASSABLE], int PosBalle[2]) {
     int indicateur = 0;
     for (int i = 0; i < LIGNE; i++) {
         for (int j = 0; j < COLONNE; j++) {
             if (PosJoueur[0] == i && PosJoueur[1] == j) {
                 printf("P");
                 indicateur = 1;
-            } else {
+            }
+            else if(PosBalle[0] == i && PosBalle[1] == j){
+                printf("B");
+                indicateur = 1;
+            }
+            else {
                 for (int z = 0; z < PIEGE; z++) {
                     if (Piege[0][z] == i && Piege[1][z] == j) {
                         printf("%c", 178);
@@ -215,9 +220,8 @@ int menu() {
 
 // Sous-programme gérant les déplacements de Snoopy
 int DeplacementJoueur(int PosJoueur[2], char touche, int Obst[2][OBSTACLE], int Piege[2][PIEGE],
-                      int ObstDeplacable[3][OBSTACLE_DEPLACABLE], int ObsCassable[2][OBSTACLE_CASSABLE],int vies) {
+                      int ObstDeplacable[3][OBSTACLE_DEPLACABLE], int ObsCassable[2][OBSTACLE_CASSABLE],int vies, int PositionBalle[2]) {
     int indicateur = 0; // Initialisation d'une variable indicatrice
-
     // Si la touche q est pressée (pour aller à gauche)
     if (touche == 'q') {
 
@@ -508,112 +512,121 @@ void AfficheTimer(int timer) {
 }
 
 
-//void deplacementBalle(int posBalle[2],char Tab[ligne][colonne]){
-/*
- * Pour la vitesse de la balle, il faut juste mettre le temps qu'il sécoule entre 2 déplacements de la balle. (temps qu'elle prend pour passer d'une case à l'autre).
- */
-/*
-int posBalleint[2] = {posBalle[0],posBalle[1]};
-while(1){
-    if(posBalle[0] == 1){
-        if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[1] + 1){
-            while(!(posBalle[0] == 8 || posBalle[1] == 18)){
-                posBalleint[0] = posBalle[0];
-                posBalleint[1] = posBalle[1];
-                posBalle[0] += 1;
-                posBalle[1] += 1;
-                Tab[posBalle[0]][posBalle[1]] = 'B';
-                Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                sleep(1);
-            }
+int deplacementBalle(int posBalle[2],char Tab[LIGNE][COLONNE],int ind,int posBalleint[2]) {
+    /*
+    * Pour la vitesse de la balle, il faut juste mettre le temps qu'il sécoule entre 2 déplacements de la balle. (temps qu'elle prend pour passer d'une case à l'autre).
+     * Le fonctionnement est assez complexe pour pas grand chose mais ça marche donc je touche plus.
+    */
+    if(ind == 1){
+        if(posBalleint[0] == posBalle[0] - 1){
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]++;
+            posBalle[1]++;
         }
-        else if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] + 1){
-            while(!(posBalle[0] == 8 || posBalle[1] == 1)){
-                posBalleint[0] = posBalle[0];
-                posBalleint[1] = posBalle[1];
-                posBalle[0] += 1;
-                posBalle[1] -= 1;
-                Tab[posBalle[0]][posBalle[1]] = 'B';
-                Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                sleep(1);
-            }
+        else {
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]--;
+            posBalle[1]++;
         }
+        if(posBalle[1] == 18){
+            ind = 4;
+            return ind;
+        }
+        else if(posBalle[0] == 1){
+            ind = 3;
+            return ind;
+        }
+        else if(posBalle[0] == 8){
+            ind = 2;
+            return ind;
+        }
+        return ind;
     }
-    else if(posBalle[0] == 8){
-        if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[0] - 1){
-            while(!(posBalle[0] == 1 || posBalle[1] == 18)){
-                posBalleint[0] = posBalle[0];
-                posBalleint[1] = posBalle[1];
-                posBalle[0] -= 1;
-                posBalle[1] += 1;
-                Tab[posBalle[0]][posBalle[1]] = 'B';
-                Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                sleep(1);
-            }
+    else if(ind == 2){
+        if(posBalleint[1] == posBalle[1] + 1){
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]--;
+            posBalle[1]--;
         }
-        else if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[1] + 1){
-            while(!(posBalle[0] == 1 || posBalle[1] == 1)){
-                posBalleint[0] = posBalle[0];
-                posBalleint[1] = posBalle[1];
-                posBalle[0] -= 1;
-                posBalle[1] -= 1;
-                Tab[posBalle[0]][posBalle[1]] = 'B';
-                Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                sleep(1);
-            }
+        else {
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]--;
+            posBalle[1]++;
         }
+        if(posBalle[1] == 18){
+            ind = 4;
+            return ind;
+        }
+        else if(posBalle[1] == 1){
+            ind = 1;
+            return ind;
+        }
+        else if(posBalle[0] == 1){
+            ind = 3;
+            return ind;
+        }
+        return ind;
     }
-    else if(posBalle[1] == 1){
-        if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] + 1){
-            while(posBalle[0] != 1){
-                posBalleint[0] = posBalle[0];
-                posBalleint[1] = posBalle[1];
-                posBalle[0] -= 1;
-                posBalle[1] += 1;
-                Tab[posBalle[0]][posBalle[1]] = 'B';
-                Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                sleep(1);
-            }
+    else if(ind == 3){
+        if(posBalleint[1] == posBalle[1] + 1){
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]++;
+            posBalle[1]--;
         }
-        else if(posBalleint[0] == posBalle[0] - 1 && posBalleint[1] == posBalle[0] + 1){
-            while(posBalle[0] != 8){
-                posBalleint[0] = posBalle[0];
-                posBalleint[1] = posBalle[1];
-                posBalle[0] += 1;
-                posBalle[1] += 1;
-                Tab[posBalle[0]][posBalle[1]] = 'B';
-                Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                sleep(1);
-            }
+        else {
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]++;
+            posBalle[1]++;
         }
+        if(posBalle[1] == 18){
+            ind = 4;
+            return ind;
+        }
+        else if(posBalle[1] == 1){
+            ind = 1;
+            return ind;
+        }
+        else if(posBalle[0] == 8){
+            ind = 2;
+            return ind;
+        }
+        return ind;
     }
-    else if(posBalle[1] == 18){
-        if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] + 1){
-            while(posBalle[0] != 8){
-                posBalleint[0] = posBalle[0];
-                posBalleint[1] = posBalle[1];
-                posBalle[0] += 1;
-                posBalle[1] -= 1;
-                Tab[posBalle[0]][posBalle[1]] = 'B';
-                Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                sleep(1);
-            }
+    else if(ind == 4){
+        if(posBalleint[0] == posBalle[0] + 1){
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]--;
+            posBalle[1]--;
         }
-        else if(posBalleint[0] == posBalle[0] + 1 && posBalleint[1] == posBalle[1] - 1){
-            while(posBalle[0] != 1){
-                posBalleint[0] = posBalle[0];
-                posBalleint[1] = posBalle[1];
-                posBalle[0] -= 1;
-                posBalle[1] -= 1;
-                Tab[posBalle[0]][posBalle[1]] = 'B';
-                Tab[posBalleint[0]][posBalleint[1]] = ' ';
-                sleep(1);
-            }
+        else {
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]++;
+            posBalle[1]--;
         }
+        if(posBalle[0] == 1){
+            ind = 3;
+            return ind;
+        }
+        else if(posBalle[1] == 1){
+            ind = 1;
+            return ind;
+        }
+        else if(posBalle[0] == 8){
+            ind = 2;
+            return ind;
+        }
+        return ind;
     }
+    return 0;
 }
-}
-*/
 
 // Sous programme évaluant l'exactitude du mot de passe saisi
 int comparaison(char str1[], char str2[]) {
@@ -700,6 +713,9 @@ int jeu(int niveau) {
     clock_t start = clock();
     int vies = VIE;
     int timer = 120; // 120 secondes pour le timer
+    int posBalle[2] = {0,3};
+    int posBalleint[2] = {posBalle[0],posBalle[1]};
+    int indic = deplacementBalle(posBalle,Tableau,4,posBalleint);
     // Appels des sous-programmes initialisant la matrice, les blocs fixes, piégés, deplacables et cassables
     InitialisationMatrice(Tableau);
     InitialisationObstacle(Obstacle);
@@ -707,18 +723,18 @@ int jeu(int niveau) {
     InitialisationObstacleDeplacable(ObstDeplacable);
     InitialisationObstacleCassable(ObstCassable);
 
-    // Appels des sous-programmes affichnt la matrice complète et le timer
-    Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable, ObstCassable);
+    // Appels des sous-programmes affichant la matrice complète et le timer
+    Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable, ObstCassable,posBalle);
     AfficheTimer(timer);
 
     // Tant que le tous les oiseaux n'ont pas été attrapés et que le timer ne s'est pas terminé
-    while (f != NombreOiseaux && timer > 0) {
+    while (f != 4 && timer > 0) {
         // Si une touche du clavier est activée
         if (kbhit()) {
             //deplacementBalle(positionBalle,Tableau);
             pos = getch(); // Prise en compte de la touche pressée sans avoir à presser ENTRER
             system("cls"); // Nettoyer la console
-            if (DeplacementJoueur(PositionJoueur, pos, Obstacle, Piege, ObstDeplacable, ObstCassable,vies) == 2) {
+            if (DeplacementJoueur(PositionJoueur, pos, Obstacle, Piege, ObstDeplacable, ObstCassable,vies, posBalle) == 2) {
                 timer = 120;
                 PositionJoueur[0] = 4;
                 PositionJoueur[1] = 9;
@@ -743,10 +759,11 @@ int jeu(int niveau) {
             if (Paused == 0) {
                 clock_t end = clock();
                 double elapsed = (double) (end - start) / CLOCKS_PER_SEC;
-                if (elapsed >= 1.0) {
+                if (elapsed >= 0.5) {
                     if (pos == 'p') {
                         pause(Paused, timer);
                     }
+                    indic = deplacementBalle(posBalle,Tableau,indic,posBalleint); //Oui oui c'est bien de la récursivité partielle.
                     timer -= (int) elapsed;
                     start = clock(); // Réinitialisation du début pour le prochain tick
                 } else {
@@ -754,11 +771,43 @@ int jeu(int niveau) {
                 }
                 system("cls");
                 // Affichage de la matrice complète avec les blocs et Snoopy
-                Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable, ObstCassable);
+                Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable, ObstCassable,posBalle);
                 // Mise à jour et affichage du timer
                 // Affichage du timer
                 AfficheTimer(timer);
                 // Si Snoopy va sur la position d'un oiseau
+                if(posBalle[0] == PositionJoueur[0] && posBalle[1] == PositionJoueur[1]){
+                    system("cls");
+                    printf(" Ping Pong, sport d'encule ouais.");
+                    sleep(2);
+                    system("cls");
+                    printf("Vies = %d",vies - 1);
+                    vies = Vie(vies);
+                    if(checkingVie(vies) == 'a'){
+                        system("cls");
+                        printf("Vous n'avez plus de vies...!\n");
+                        sleep(2);
+                        system("cls");
+                        printf("GAME OVER\n");
+                        sleep(2);
+                        vies = 3;
+                        system("cls");
+                        return 2;
+                    }
+                    sleep(2);
+                    timer = 125;
+                    PositionJoueur[0] = 4;
+                    PositionJoueur[1] = 9;
+                    posBalle[0] = 1;
+                    posBalle[1] = 2;
+                    Tableau[1][1] = 'O';
+                    Tableau[1][18] = 'O';
+                    Tableau[8][1] = 'O';
+                    Tableau[8][18] = 'O';
+                    system("cls");
+                    Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable, ObstCassable,posBalle);
+                    AfficheTimer(120);
+                }
                 if (Tableau[PositionJoueur[0]][PositionJoueur[1]] == 'O') {
                     // Le nombre d'oiseaux attrapés augmente de 1
                     f++;
@@ -806,21 +855,23 @@ int jeu(int niveau) {
                 Tableau[8][1] = 'O';
                 Tableau[8][18] = 'O';
                 system("cls");
-                Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable, ObstCassable);
+                Affichage(Tableau, PositionJoueur, Obstacle, Piege, ObstDeplacable, ObstCassable, posBalle);
                 AfficheTimer(timer);
             }
         }
         // Si tous les oiseaux ont été attrapés
-        if (f == NombreOiseaux) {
+        if (f == 4) {
             printf("Bravo! Vous avez attrape tous les oiseaux!...\n");
             sleep(2); // Délai de 2 secondes
             printf("Votre score est de...\n");
-            sleep(2); // Délai de 2 secondes
+            sleep(2); // Délai de 2 secondesz
             // Affichage et calcul du score (temps restant * 100)
             printf("%d !\n", timer * 100);
             sleep(2); // Délai de 2 secondes
             printf("Merci d'avoir joue !\n");
             sleep(2); // Délai de 2 secondes
+            f = 0;
+            return 2;
         }
     }
     return 1; // Commande le retour au menu
