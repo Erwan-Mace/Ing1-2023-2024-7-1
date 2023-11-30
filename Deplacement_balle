@@ -1,30 +1,114 @@
-int deplacementBalle(int posBalle[2],char Tab[LIGNE][COLONNE],int ind) {
+int deplacementBalle(int posBalle[2],char Tab[LIGNE][COLONNE],int ind,int posBalleint[2]) {
     /*
     * Pour la vitesse de la balle, il faut juste mettre le temps qu'il sécoule entre 2 déplacements de la balle. (temps qu'elle prend pour passer d'une case à l'autre).
      * Le fonctionnement est assez complexe pour pas grand chose mais ça marche donc je touche plus.
     */
-    if(posBalle[1] == 1 || ind == 1){
-        posBalle[0]--;
-        posBalle[1]++;
-        ind = 1;
+    if(ind == 1){
+        if(posBalleint[0] == posBalle[0] - 1){
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]++;
+            posBalle[1]++;
+        }
+        else {
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]--;
+            posBalle[1]++;
+        }
+        if(posBalle[1] == 18){
+            ind = 4;
+            return ind;
+        }
+        else if(posBalle[0] == 1){
+            ind = 3;
+            return ind;
+        }
+        else if(posBalle[0] == 8){
+            ind = 2;
+            return ind;
+        }
         return ind;
     }
-    else if(posBalle[0] == 8 || ind == 2){
-        posBalle[0]--;
-        posBalle[1]++;
-        ind = 2;
+    else if(ind == 2){
+        if(posBalleint[1] == posBalle[1] + 1){
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]--;
+            posBalle[1]--;
+        }
+        else {
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]--;
+            posBalle[1]++;
+        }
+        if(posBalle[1] == 18){
+            ind = 4;
+            return ind;
+        }
+        else if(posBalle[1] == 1){
+            ind = 1;
+            return ind;
+        }
+        else if(posBalle[0] == 1){
+            ind = 3;
+            return ind;
+        }
         return ind;
     }
-    else if(posBalle[0] == 1 || ind == 3){
-        posBalle[0]++;
-        posBalle[1]++;
-        ind = 3;
+    else if(ind == 3){
+        if(posBalleint[1] == posBalle[1] + 1){
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]++;
+            posBalle[1]--;
+        }
+        else {
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]++;
+            posBalle[1]++;
+        }
+        if(posBalle[1] == 18){
+            ind = 4;
+            return ind;
+        }
+        else if(posBalle[1] == 1){
+            ind = 1;
+            return ind;
+        }
+        else if(posBalle[0] == 8){
+            ind = 2;
+            return ind;
+        }
         return ind;
     }
-    else if(posBalle[1] == 18 || ind == 4){
-        posBalle[0]++;
-        posBalle[1]--;
-        ind = 4;
+    else if(ind == 4){
+        if(posBalleint[0] == posBalle[0] + 1){
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]--;
+            posBalle[1]--;
+        }
+        else {
+            posBalleint[0] = posBalle[0];
+            posBalleint[1] = posBalle[1];
+            posBalle[0]++;
+            posBalle[1]--;
+        }
+        if(posBalle[0] == 1){
+            ind = 3;
+            return ind;
+        }
+        else if(posBalle[1] == 1){
+            ind = 1;
+            return ind;
+        }
+        else if(posBalle[0] == 8){
+            ind = 2;
+            return ind;
+        }
         return ind;
     }
     return 0;
