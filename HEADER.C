@@ -18,6 +18,14 @@
 #define OBSTACLE_CASSABLE 6
 #define VIE 3
 
+//initialisation teleportation 
+int Teleporteur1Depart[2] = {3, 3};
+int Teleporteur1Arrivee[2] = {7, 7};
+int Teleporteur2Depart[2] = {2, 6};
+int Teleporteur2Arrivee[2] = {5, 10};
+int Teleporteur3Depart[2] = {1, 9};
+int Teleporteur3Arrivee[2] = {6, 15};
+
 // Sous-programme de gestion du nombre de vies
 int Vie(int nb_vies) {
     // Décremente le nombre de vies
