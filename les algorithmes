@@ -53,6 +53,12 @@ DEBUT
             SI PosJoueur[0] = i ET PosJoueur[1] = j ALORS
                 AFFICHER "P"
                 indicateur <- 1
+SINON
+                // Vérifie chaque piège
+                POUR z DE 0 A PIEGE FAIRE
+                    SI Piege[0][z] = i ET Piege[1][z] = j ALORS
+                        AFFICHER caractère ASCII 224
+                        indicateur <- 1
 
 
 
