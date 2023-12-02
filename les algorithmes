@@ -101,3 +101,4 @@ FIN
 
 \\algo fonction comparaison\\
 
+FONCTION comparaison(CHAINE str1, CHAINE str2)
