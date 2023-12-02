@@ -87,6 +87,10 @@ FIN SI
                 AFFICHER symbole de flèche ASCII
                 indicateur <- 1
             FIN SI
+// Affiche l'élément du tableau si aucun élément spécial n'est présent
+            SI indicateur = 0 ALORS
+                AFFICHER Tab[i][j]
+            FIN SI
 
 
 
