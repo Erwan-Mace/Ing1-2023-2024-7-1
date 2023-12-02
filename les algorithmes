@@ -49,6 +49,10 @@ DEBUT
     POUR i DE 0 A ligne FAIRE
         POUR j DE 0 A colonne FAIRE
             indicateur <- 0
+// Vérifie la position du joueur
+            SI PosJoueur[0] = i ET PosJoueur[1] = j ALORS
+                AFFICHER "P"
+                indicateur <- 1
 
 
 
