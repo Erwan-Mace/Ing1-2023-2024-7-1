@@ -44,5 +44,11 @@ FIN
 
 \\algo  affichage \\
 
+DEBUT
+    ENTIER indicateur
+    POUR i DE 0 A ligne FAIRE
+        POUR j DE 0 A colonne FAIRE
+            indicateur <- 0
+
 
 
