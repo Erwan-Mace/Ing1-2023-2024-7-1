@@ -92,5 +92,12 @@ FIN SI
                 AFFICHER Tab[i][j]
             FIN SI
 
+AFFICHER "|"
+        FIN POUR
+        AFFICHER retour à la ligne
+    FIN POUR
+    AFFICHER retour à la ligne
+FIN
+
 
 
