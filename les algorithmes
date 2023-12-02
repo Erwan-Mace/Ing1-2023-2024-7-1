@@ -59,6 +59,13 @@ SINON
                     SI Piege[0][z] = i ET Piege[1][z] = j ALORS
                         AFFICHER caractère ASCII 224
                         indicateur <- 1
+FIN POUR
+
+                // Vérifie chaque obstacle
+                POUR k DE 0 A obstacle FAIRE
+                    SI Obstacle[0][k] = i ET Obstacle[1][k] = j ALORS
+                        AFFICHER caractère ASCII 223
+                        indicateur <- 1
 
 
 
