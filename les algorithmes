@@ -104,3 +104,4 @@ FIN
 FONCTION comparaison(CHAINE str1, CHAINE str2)
 ENTIER value <- 1
 POUR i DE 0 JUSQU'À longueur(str1) FAIRE
+SI str1[i] ≠ str2[i] ALORS
