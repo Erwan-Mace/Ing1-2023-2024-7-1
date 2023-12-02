@@ -8,10 +8,10 @@
 
 #define LIGNE 10
 #define COLONNE 20
-#define OBSTACLE 8
-#define PIEGE 6
-#define OBSTACLE_DEPLACABLE 6
-#define OBSTACLE_CASSABLE 6
+#define OBSTACLE_MAX 13
+#define PIEGE_MAX 26
+#define OBSTACLE_DEPLACABLE_MAX 5
+#define OBSTACLE_CASSABLE_MAX 14
 
 int main() {
 
@@ -20,6 +20,23 @@ int main() {
     char MDP2[] = "Molly"; // Mot de passe pour le niveau 2
     char MDP3[] = "Spike"; // Mot de passe pour le niveau 3
     char MDP4[] = "Olaf"; // Mot de passe pour le niveau 4
+
+    int Oiseaux[2][4];
+    int TabObstCassable[2][OBSTACLE_CASSABLE_MAX];
+    int TabObstaclesDep[3][OBSTACLE_DEPLACABLE_MAX];
+    int TabObstPiege[2][PIEGE_MAX];
+    int PosJoueur[2] = {4, 9};
+    int NombreOiseauxTrouve = 0;
+    int Obstacle[2][OBSTACLE_MAX];
+    char nomChargement[100];
+    int niveau;
+    int vie = 3;
+    int score;
+    int timer;
+    int OBSTACLE;
+    int OBSTACLE_CASSABLE;
+    int OBSTACLE_DEPLACABLE;
+    int PIEGE;
 
     // Initialisation d'un tableau de caractères en utilisant les longueurs des mots de passe
     char tabMDP[4] = {MDP1[strlen(MDP1)], MDP2[strlen(MDP2)], MDP3[strlen(MDP3)], MDP4[strlen(MDP4)]};
@@ -32,10 +49,20 @@ int main() {
         system("cls"); // Nettoyage de la console
         printf("Chargement du premier niveau...\n");
         sleep(3); // Délai de 3 secondes
-        system("cls"); // Nettoyage de la console
+        system("cls");// Nettoyage de la console
+        //InitialisationObstacle(Obstacle);
+        chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable, TabObstaclesDep,
+                          TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                          "Niveau1", Obstacle, &niveau, &vie, &score, &timer);
+        //InitialisationOiseaux(Oiseaux);
+        //InitialisationObstaclePiege(TabObstPiege);
+        //InitialisationObstacleDeplacable(TabObstaclesDep);
+        //InitialisationObstacleCassable(TabObstCassable);
 
         // Si le jeu commande le retour au menu
-        if (jeu(1) == 2) {
+        if (jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 1, TabObstCassable, TabObstaclesDep,
+                TabObstPiege, PosJoueur, Oiseaux, Obstacle, NombreOiseauxTrouve,
+                vie, score, timer) == 2) {
             main(); // Retour au menu
         }
     }
@@ -43,10 +70,29 @@ int main() {
         // Si l'option 2 du menu est choisie : continuer une partie
     else if (valmenu == 2) {
         system("cls"); // Nettoyage de la console
-        char valsauvegarde[50];
+        //InitialisationOiseaux(Oiseaux);
+        //InitialisationObstacle(Obstacle);
+        //InitialisationObstaclePiege(TabObstPiege);
+        //InitialisationObstacleDeplacable(TabObstaclesDep);
+        //InitialisationObstacleCassable(TabObstCassable);
+        printf("Veuillez indiquer le nom du fichier a charger:\n");
+        scanf("%s", nomChargement);
+        system("cls");
+        printf("Chargement de votre sauvegarde...");
+        sleep(3); // Délai de 3 secondes
+        system("cls");
+        chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable, TabObstaclesDep,
+                          TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                          nomChargement, Obstacle, &niveau, &vie, &score, &timer);
+        //printf("%d", NombreOiseauxTrouve);
+        //printf("\n");
+        jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 1, TabObstCassable, TabObstaclesDep, TabObstPiege,
+            PosJoueur, Oiseaux, Obstacle, NombreOiseauxTrouve, vie,
+            score, timer);
+        //char valsauvegarde[50];
         // Saisie de la sauvegarde
-        printf("Quelle sauvegarde voulez-vous utiliser ?\n");
-        scanf("%s", valsauvegarde);
+        //printf("Quelle sauvegarde voulez-vous utiliser ?\n");
+        //scanf("%s", valsauvegarde);
         //Charger la sauvegarde du même nom.
         //INTRODUIRE VIES
     }
@@ -68,9 +114,14 @@ int main() {
             printf("Chargement du premier niveau...\n");
             sleep(2); // Délai de 2 secondes
             system("cls"); // Nettoyage de la console
+            chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable,
+                              TabObstaclesDep, TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                              "Niveau1", Obstacle, &niveau, &vie, &score, &timer);
 
             // Si le jeu commande le retour au menu
-            if (jeu(1) == 2) {
+            if (jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 1, TabObstCassable, TabObstaclesDep,
+                    TabObstPiege, PosJoueur, Oiseaux, Obstacle,
+                    NombreOiseauxTrouve, vie, score, timer) == 2) {
                 main(); // Retour au menu
             }
             // Charger le premier niveau
@@ -82,9 +133,14 @@ int main() {
             printf("Chargement du deuxieme niveau...\n");
             sleep(2); // Délai de 2 secondes
             system("cls"); // Nettoyage de la console
+            chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable,
+                              TabObstaclesDep, TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                              "Niveau2", Obstacle, &niveau, &vie, &score, &timer);
 
             // Si le jeu commande le retour au menu
-            if (jeu(2) == 2) {
+            if (jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 2, TabObstCassable, TabObstaclesDep,
+                    TabObstPiege, PosJoueur, Oiseaux, Obstacle,
+                    NombreOiseauxTrouve, vie, score, timer) == 2) {
                 main(); // Retour au menu
             }
             // Charger le deuxième niveau
@@ -96,9 +152,15 @@ int main() {
             printf("Chargement du troisieme niveau...\n");
             sleep(2); // Délai de 2 secondes
             system("cls"); // Nettoyage de la console
+            chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable,
+                              TabObstaclesDep, TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                              "Niveau3", Obstacle, &niveau, &vie, &score, &timer);
+
 
             // Si le jeu commande le retour au menu
-            if (jeu(3) == 2) {
+            if (jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 3, TabObstCassable, TabObstaclesDep,
+                    TabObstPiege, PosJoueur, Oiseaux, Obstacle,
+                    NombreOiseauxTrouve, vie, score, timer) == 2) {
                 main(); // Retour au menu
             }
             // Charger le troisieme niveau
@@ -110,9 +172,14 @@ int main() {
             printf("Chargement du quatrieme niveau...\n");
             sleep(2); // Délai de 2 secondes
             system("cls"); // Nettoyage de la console
+            chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable,
+                              TabObstaclesDep, TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                              "Niveau4", Obstacle, &niveau, &vie, &score, &timer);
 
             // Si le jeu commande le retour au menu
-            if (jeu(4) == 2) {
+            if (jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 4, TabObstCassable, TabObstaclesDep,
+                    TabObstPiege, PosJoueur, Oiseaux, Obstacle,
+                    NombreOiseauxTrouve, vie, score, timer) == 2) {
                 main(); // Retour au menu
             }
             // Charger le quatrieme niveau
