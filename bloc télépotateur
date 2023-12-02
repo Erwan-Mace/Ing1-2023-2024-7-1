@@ -17,3 +17,16 @@ if ((i == Teleporteur1Depart[0] && j == Teleporteur1Depart[1]) ||
     printf("%c", 0x10); 
     indicateur = 1;
 }
+
+void teleportChar(int PosJoueur[2], int T1[2], int T2[2]) {
+    // ca si le joueur est sur le premier point de téléportation
+    if (PosJoueur[0] == T1[0] && PosJoueur[1] == T1[1]) {
+        PosJoueur[0] = T2[0]; // Modifie la position du joueur vers le deuxième point
+        PosJoueur[1] = T2[1];
+    }
+    // ca si le joueur est sur le deuxième point de téléportation
+    else if (PosJoueur[0] == T2[0] && PosJoueur[1] == T2[1]) {
+        PosJoueur[0] = T1[0]; // Modifie la position du joueur vers le premier point
+        PosJoueur[1] = T1[1];
+    }
+}
