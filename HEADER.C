@@ -958,9 +958,9 @@ void sauvegarde(int OBSTACLE, int OBSTACLE_CASSABLE, int OBSTACLE_DEPLACABLE, in
     fprintf(sauvegarde, "\n");
     fprintf(sauvegarde, "%d ", OBSTACLE_CASSABLE); // ecriture du nombre d'obstacle cassable dans le fichier "sauvegarde"
     fprintf(sauvegarde, "\n");
-    fprintf(sauvegarde, "%d ", OBSTACLE_DEPLACABLE);
+    fprintf(sauvegarde, "%d ", OBSTACLE_DEPLACABLE); // ecriture du nombre d'obstacle deplacable dans le fichier "sauvegarde"
     fprintf(sauvegarde, "\n");
-    fprintf(sauvegarde, "%d ", PIEGE);
+    fprintf(sauvegarde, "%d ", PIEGE);// ecriture du nombre d'obstacle piege dans le fichier "sauvegarde"
     fprintf(sauvegarde, "\n");
 
     for (int i = 0; i < 2; i++) {
