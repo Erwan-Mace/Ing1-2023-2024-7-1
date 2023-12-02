@@ -1,18 +1,17 @@
-#include <stdio.h>
-#include<stdlib.h>
-#include<conio.h>
-#include <time.h>
-#include<unistd.h>
-#include <string.h>
-//#include <pthread.h>
-#include "programmes.h"
 
-#define LIGNE 10 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include "header.h"
+#include <conio.h>
+
+#define LIGNE 10
 #define COLONNE 20
-#define OBSTACLE 8
-#define PIEGE 6
-#define OBSTACLE_DEPLACABLE 6
-#define OBSTACLE_CASSABLE 4
+#define OBSTACLE_MAX 13
+#define PIEGE_MAX 26
+#define OBSTACLE_DEPLACABLE_MAX 5
+#define OBSTACLE_CASSABLE_MAX 14
 
 int main() {
 
@@ -22,35 +21,83 @@ int main() {
     char MDP3[] = "Spike"; // Mot de passe pour le niveau 3
     char MDP4[] = "Olaf"; // Mot de passe pour le niveau 4
 
+    int Oiseaux[2][4];
+    int TabObstCassable[2][OBSTACLE_CASSABLE_MAX];
+    int TabObstaclesDep[3][OBSTACLE_DEPLACABLE_MAX];
+    int TabObstPiege[2][PIEGE_MAX];
+    int PosJoueur[2] = {4, 9};
+    int NombreOiseauxTrouve = 0;
+    int Obstacle[2][OBSTACLE_MAX];
+    char nomChargement[100];
+    int niveau;
+    int vie = 3;
+    int score;
+    int timer;
+    int OBSTACLE;
+    int OBSTACLE_CASSABLE;
+    int OBSTACLE_DEPLACABLE;
+    int PIEGE;
+
     // Initialisation d'un tableau de caractères en utilisant les longueurs des mots de passe
     char tabMDP[4] = {MDP1[strlen(MDP1)], MDP2[strlen(MDP2)], MDP3[strlen(MDP3)], MDP4[strlen(MDP4)]};
     int valmenu = menu(); // Variable indiquant le numéro de la fonction choisie et appelée par le menu
+
+    char sortirRegles;
 
     // Si l'option 1 du menu est choisie : démarrer une partie
     if (valmenu == 1) {
         system("cls"); // Nettoyage de la console
         printf("Chargement du premier niveau...\n");
         sleep(3); // Délai de 3 secondes
-        system("cls"); // Nettoyage de la console
+        system("cls");// Nettoyage de la console
+        //InitialisationObstacle(Obstacle);
+        chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable, TabObstaclesDep,
+                          TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                          "Niveau1", Obstacle, &niveau, &vie, &score, &timer);
+        //InitialisationOiseaux(Oiseaux);
+        //InitialisationObstaclePiege(TabObstPiege);
+        //InitialisationObstacleDeplacable(TabObstaclesDep);
+        //InitialisationObstacleCassable(TabObstCassable);
 
         // Si le jeu commande le retour au menu
-        if (jeu(1) == 2) {
+        if (jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 1, TabObstCassable, TabObstaclesDep,
+                TabObstPiege, PosJoueur, Oiseaux, Obstacle, NombreOiseauxTrouve,
+                vie, score, timer) == 2) {
             main(); // Retour au menu
         }
     }
 
-    // Si l'option 2 du menu est choisie : continuer une partie
+        // Si l'option 2 du menu est choisie : continuer une partie
     else if (valmenu == 2) {
         system("cls"); // Nettoyage de la console
-        char valsauvegarde[50];
+        //InitialisationOiseaux(Oiseaux);
+        //InitialisationObstacle(Obstacle);
+        //InitialisationObstaclePiege(TabObstPiege);
+        //InitialisationObstacleDeplacable(TabObstaclesDep);
+        //InitialisationObstacleCassable(TabObstCassable);
+        printf("Veuillez indiquer le nom du fichier a charger:\n");
+        scanf("%s", nomChargement);
+        system("cls");
+        printf("Chargement de votre sauvegarde...");
+        sleep(3); // Délai de 3 secondes
+        system("cls");
+        chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable, TabObstaclesDep,
+                          TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                          nomChargement, Obstacle, &niveau, &vie, &score, &timer);
+        //printf("%d", NombreOiseauxTrouve);
+        //printf("\n");
+        jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 1, TabObstCassable, TabObstaclesDep, TabObstPiege,
+            PosJoueur, Oiseaux, Obstacle, NombreOiseauxTrouve, vie,
+            score, timer);
+        //char valsauvegarde[50];
         // Saisie de la sauvegarde
-        printf("Quelle sauvegarde voulez-vous utiliser ?\n");
-        scanf("%s", valsauvegarde);
+        //printf("Quelle sauvegarde voulez-vous utiliser ?\n");
+        //scanf("%s", valsauvegarde);
         //Charger la sauvegarde du même nom.
         //INTRODUIRE VIES
     }
 
-    // Si l'option 3 du menu est choisie : charger une partie
+        // Si l'option 3 du menu est choisie : charger une partie
     else if (valmenu == 3) {
         system("cls"); // Nettoyage de la console
         char valmdp[100];
@@ -67,57 +114,78 @@ int main() {
             printf("Chargement du premier niveau...\n");
             sleep(2); // Délai de 2 secondes
             system("cls"); // Nettoyage de la console
+            chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable,
+                              TabObstaclesDep, TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                              "Niveau1", Obstacle, &niveau, &vie, &score, &timer);
 
             // Si le jeu commande le retour au menu
-            if (jeu(1) == 2) {
+            if (jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 1, TabObstCassable, TabObstaclesDep,
+                    TabObstPiege, PosJoueur, Oiseaux, Obstacle,
+                    NombreOiseauxTrouve, vie, score, timer) == 2) {
                 main(); // Retour au menu
             }
             // Charger le premier niveau
         }
 
-        // Si le mot des passe saisi correspond à celui du deuxième niveau
+            // Si le mot des passe saisi correspond à celui du deuxième niveau
         else if (validation == 2) {
             system("cls"); // Nettoyage de la console
             printf("Chargement du deuxieme niveau...\n");
             sleep(2); // Délai de 2 secondes
             system("cls"); // Nettoyage de la console
+            chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable,
+                              TabObstaclesDep, TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                              "Niveau2", Obstacle, &niveau, &vie, &score, &timer);
 
             // Si le jeu commande le retour au menu
-            if (jeu(2) == 2) {
+            if (jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 2, TabObstCassable, TabObstaclesDep,
+                    TabObstPiege, PosJoueur, Oiseaux, Obstacle,
+                    NombreOiseauxTrouve, vie, score, timer) == 2) {
                 main(); // Retour au menu
             }
             // Charger le deuxième niveau
         }
 
-        // Si le mot des passe saisi correspond à celui du troisième niveau
+            // Si le mot des passe saisi correspond à celui du troisième niveau
         else if (validation == 3) {
             system("cls"); // Nettoyage de la console
             printf("Chargement du troisieme niveau...\n");
             sleep(2); // Délai de 2 secondes
             system("cls"); // Nettoyage de la console
+            chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable,
+                              TabObstaclesDep, TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                              "Niveau3", Obstacle, &niveau, &vie, &score, &timer);
+
 
             // Si le jeu commande le retour au menu
-            if (jeu(3) == 2) {
+            if (jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 3, TabObstCassable, TabObstaclesDep,
+                    TabObstPiege, PosJoueur, Oiseaux, Obstacle,
+                    NombreOiseauxTrouve, vie, score, timer) == 2) {
                 main(); // Retour au menu
             }
             // Charger le troisieme niveau
         }
 
-        // Si le mot des passe saisi correspond à celui du quatrième niveau
+            // Si le mot des passe saisi correspond à celui du quatrième niveau
         else if (validation == 4) {
             system("cls"); // Nettoyage de la console
             printf("Chargement du quatrieme niveau...\n");
             sleep(2); // Délai de 2 secondes
             system("cls"); // Nettoyage de la console
+            chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable,
+                              TabObstaclesDep, TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
+                              "Niveau4", Obstacle, &niveau, &vie, &score, &timer);
 
             // Si le jeu commande le retour au menu
-            if (jeu(4) == 2) {
+            if (jeu(OBSTACLE, OBSTACLE_CASSABLE, OBSTACLE_DEPLACABLE, PIEGE, 4, TabObstCassable, TabObstaclesDep,
+                    TabObstPiege, PosJoueur, Oiseaux, Obstacle,
+                    NombreOiseauxTrouve, vie, score, timer) == 2) {
                 main(); // Retour au menu
             }
             // Charger le quatrieme niveau
         }
 
-        // Si le mot de passe saisi ne correspond à aucun mot de passe de la base de données
+            // Si le mot de passe saisi ne correspond à aucun mot de passe de la base de données
         else {
             system("cls"); // Nettoyage de la console
             printf("Le mot de passe que vous avez saisi n'est pas dans la base de donnees...\n");
@@ -127,12 +195,15 @@ int main() {
         }
     }
 
-    // Si l'option 4 du menu est choisie : afficher les règles du jeu
+        // Si l'option 4 du menu est choisie : afficher les règles du jeu
     else if (valmenu == 4) {
-       system("cls");
+        system("cls"); // Nettoyage de la console
+
+        // Affichage des règles du jeu
+        system("cls");
         printf("Voici les regles du jeu :                                                                 Appuyer sur x pour quitter\n\n"
-               "Votre but est de sauver les 4 oiseaux qui sont representes par des %c repartis aux 4 coins de la matrice de 10x20.\n"
-               "Meme matrice qui comprend des blocs qui ont pour objectif de ralentir la progression de Snoopy : \n\n"
+               "Votre but est de sauver les 4 oiseaux qui sont representes par des 'O' repartis aux 4 coins de la matrice de 10x20.\n"
+               "Cette matrice comprend des blocs qui ont pour objectif de ralentir la progression de Snoopy : \n\n"
                "Les blocs cassables : %c \n- Lorsque Snoopy se trouve sur une case adjacente a l'un de ces blocs, il peut les casser en appuyant sur 'c'.\n\n"
                "Les blocs deplacable : %c \n- Lorsque Snoopy se trouve sur une case adjacente a l'un de ces blocs, il peut les deplacer en appuyant sur la touche directionnelle (zqsd) qui va dans la direction du bloc.\n\n"
                "Les blocs pieges : %c \n- Lorsque Snoopy se trouve sur un bloc piege, il perd une vie et recommence le niveau.\n\n"
@@ -145,20 +216,21 @@ int main() {
                "Il est possible de sauvegarder sa progression a tout moment en appuyant sur 'x'.\n"
                "L'utilisation de mot de passe est egalement possible pour acceder aux niveaux superieur en n'ayant pas a rejouer les premiers niveaux, vous obtenez ces mots de passes en finissant les niveaux.\n"
                "Qui sait, peut-etre qu'il y a meme un niveau cache...\n"
-               "Amusez vous bien !.\n",'A','B','C','D','E','F','G');
-        while(1){
-            if(kbhit()){
+               "Amusez vous bien !.\n", 184, 244, 178, 'F', 'G', 223);
+        while (1) {
+            if (kbhit()) {
                 sortirRegles = getch();
-                if(sortirRegles == 'x'){
+                if (sortirRegles == 'x') {
                     break;
                 }
             }
         }
         system("cls");
-        main(); //Retour au menu.
+        main(); //Retour
+
     }
 
-    // Si l'option 5 du menu est choisie : afficher les scores
+        // Si l'option 5 du menu est choisie : afficher les scores
     else if (valmenu == 5) {
         system("cls"); // Nettoyage de la console
 
@@ -175,8 +247,9 @@ int main() {
         main(); // Retour au menu
     }
 
-    // Si l'option 6 du menu est choisie : quitter
+        // Si l'option 6 du menu est choisie : quitter
     else if (valmenu == 6) {
         return 0; // Fin de jeu
     }
 }
+
