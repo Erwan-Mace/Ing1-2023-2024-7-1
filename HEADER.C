@@ -954,7 +954,7 @@ void sauvegarde(int OBSTACLE, int OBSTACLE_CASSABLE, int OBSTACLE_DEPLACABLE, in
     char nomSauvegarde[100];
     scanf("%s", nomSauvegarde);
     FILE *sauvegarde = fopen(nomSauvegarde, "w");
-    fprintf(sauvegarde, "%d ", OBSTACLE);
+    fprintf(sauvegarde, "%d ", OBSTACLE); // ecriture du nombre d'obstacle dans le fichier "sauvegarde"
     fprintf(sauvegarde, "\n");
     fprintf(sauvegarde, "%d ", OBSTACLE_CASSABLE);
     fprintf(sauvegarde, "\n");
