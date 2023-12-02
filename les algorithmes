@@ -80,6 +80,13 @@ FIN POUR
                         AFFICHER caractère ASCII 221
                         indicateur <- 1
                 FIN POUR
+FIN SI
+
+            // Affichage des téléporteurs
+            SI (i, j) correspond à une position de téléporteur ALORS
+                AFFICHER symbole de flèche ASCII
+                indicateur <- 1
+            FIN SI
 
 
 
