@@ -107,3 +107,4 @@ POUR i DE 0 JUSQU'À longueur(str1) FAIRE
 SI str1[i] ≠ str2[i] ALORS
 value <- 0
 RETOURNER value
+FIN SI
