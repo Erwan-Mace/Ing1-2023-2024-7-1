@@ -8,7 +8,7 @@
 
 #define LIGNE 10
 #define COLONNE 20
-#define OBSTACLE_MAX 13 // nombre maximulm 
+#define OBSTACLE_MAX 13 // nombre maximum d'obstacle
 #define PIEGE_MAX 26 // nombre maximum de piege 
 #define OBSTACLE_DEPLACABLE_MAX 5
 #define OBSTACLE_CASSABLE_MAX 14
