@@ -74,6 +74,12 @@ FIN POUR
                         AFFICHER caractère ASCII 222
                         indicateur <- 1
                 FIN POUR
+// Vérifie chaque obstacle cassable
+                POUR w DE 0 A OBSTACLE_CASSABLE FAIRE
+                    SI ObstCassable[0][w] = i ET ObstCassable[1][w] = j ALORS
+                        AFFICHER caractère ASCII 221
+                        indicateur <- 1
+                FIN POUR
 
 
 
