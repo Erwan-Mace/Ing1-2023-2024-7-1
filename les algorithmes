@@ -66,6 +66,14 @@ FIN POUR
                     SI Obstacle[0][k] = i ET Obstacle[1][k] = j ALORS
                         AFFICHER caractère ASCII 223
                         indicateur <- 1
+FIN POUR
+
+                // Vérifie chaque obstacle déplaçable
+                POUR y DE 0 A OBSTACLE_DEPLACABLE FAIRE
+                    SI ObstDeplacable[0][y] = i ET ObstDeplacable[1][y] = j ALORS
+                        AFFICHER caractère ASCII 222
+                        indicateur <- 1
+                FIN POUR
 
 
 
