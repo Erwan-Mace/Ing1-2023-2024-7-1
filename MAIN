@@ -51,9 +51,10 @@ int main() {
         sleep(3); // Délai de 3 secondes
         system("cls");// Nettoyage de la console
         //InitialisationObstacle(Obstacle);
+// chargement de la matrice du niveau 1 à l'aide des fichiers texte 
         chargementMatrice(&OBSTACLE, &OBSTACLE_CASSABLE, &OBSTACLE_DEPLACABLE, &PIEGE, TabObstCassable, TabObstaclesDep,
                           TabObstPiege, PosJoueur, Oiseaux, &NombreOiseauxTrouve,
-                          "Niveau1", Obstacle, &niveau, &vie, &score, &timer);
+                          "Niveau1", Obstacle, &niveau, &vie, &score, &timer); 
         //InitialisationOiseaux(Oiseaux);
         //InitialisationObstaclePiege(TabObstPiege);
         //InitialisationObstacleDeplacable(TabObstaclesDep);
