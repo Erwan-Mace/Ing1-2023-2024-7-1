@@ -108,3 +108,4 @@ SI str1[i] ≠ str2[i] ALORS
 value <- 0
 RETOURNER value
 FIN SI
+FIN POUR
