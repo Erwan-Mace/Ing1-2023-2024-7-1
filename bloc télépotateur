@@ -6,3 +6,14 @@ int Teleporteur2Arrivee[2] = {5, 10};
 
 int Teleporteur3Depart[2] = {1, 9}; 
 int Teleporteur3Arrivee[2] = {6, 15};
+
+// Dans la boucle de la fonction Affichage
+if ((i == Teleporteur1Depart[0] && j == Teleporteur1Depart[1]) ||
+    (i == Teleporteur1Arrivee[0] && j == Teleporteur1Arrivee[1]) ||
+    (i == Teleporteur2Depart[0] && j == Teleporteur2Depart[1]) ||
+    (i == Teleporteur2Arrivee[0] && j == Teleporteur2Arrivee[1]) ||
+    (i == Teleporteur3Depart[0] && j == Teleporteur3Depart[1]) ||
+    (i == Teleporteur3Arrivee[0] && j == Teleporteur3Arrivee[1])) {
+    printf("%c", 0x10); 
+    indicateur = 1;
+}
